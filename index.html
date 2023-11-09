@@ -1,12 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Authentication-Page</title>
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-    
-    <script type="modulr" src="script.js"></script>
+    <div class="container">
+        <div id="sign-up">
+            <h1 class="Sign-up-heading">Sign Up</h1>
+            <form id="sign-up-form">
+                <label for="username">Name</label>
+                <br>
+                <br>
+                <input type="text" required id="sign-up-user-name" />
+                <br>
+                <br>
+                <label for="user-email">Email</label>
+                <br>
+                <br>
+                <input type="email" required id="sign-up-user-email">
+                <br>
+                <br>
+                <label for="user-password">Password</label>
+                <br>
+                <br>
+                <input minlength="8" type="password" required id="sign-up-user-password">
+                <br>
+                <br>
+                <br>
+                <button type="submit" id="sign-up-btn">Sign up</button>
+            </form>
+            <br>
+            <p class="txt">You already have an account <a id="sign-in-txt">Sign in</a></p>
+        </div>
+        <div id="sign-in">
+            <h1 class="Sign-in-heading">Sign In</h1>
+            <form id="sign-in-form" >
+                <label for="user-email">Email</label>
+                <br>
+                <br>
+                <input type="email" required id="user-email">
+                <br>
+                <br>
+                <label for="user-password">Password</label>
+                <br>
+                <br>
+                <input minlength="8" type="password" required id="user-password">
+                <br>
+                <br>
+                <br>
+                <button type="submit" id="sign-in-btn">Sign In</button>
+            </form>
+            <p class="txt">You don`t have an account <a id="sign-up-txt">Sign up</a></p>
+        </div>
+    </div>
+    <script type="module" src="script.js"></script>
 </body>
+
 </html>
