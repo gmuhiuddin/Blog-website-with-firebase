@@ -79,3 +79,7 @@ input{
 #sign-up-txt:hover{
     color: rgb(106, 101, 249);
 }
+#Blog-app-container{
+display: none;
+text-align: center;
+}

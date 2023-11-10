@@ -8,8 +8,20 @@ let signInPassword = document.getElementById('user-password');
 let signUpForm = document.getElementById('sign-up-form');
 let signInForm = document.getElementById('sign-in-form');
 
+let BlogAppContainer = document.getElementById('Blog-app-container');
+
+let signInTxt = document.getElementById('sign-in-txt');
+let signInDiv = document.getElementById('sign-in');
+let signupDiv = document.getElementById('sign-up');
+
+let signUpTxt = document.getElementById('sign-up-txt');
+
+let container = document.getElementsByClassName('container');
+
+let logoutBtn = document.getElementById('logoutBtn');
+
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-app.js";
-import { getAuth , createUserWithEmailAndPassword , signInWithEmailAndPassword} from "https://www.gstatic.com/firebasejs/10.5.2/firebase-auth.js";
+import { getAuth , signOut , createUserWithEmailAndPassword , onAuthStateChanged , signInWithEmailAndPassword} from "https://www.gstatic.com/firebasejs/10.5.2/firebase-auth.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDMeG-Yt8eUI3eoSEbLokIk9Fo_fCRTZ3k",
@@ -24,6 +36,24 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    // User is signed in, see docs for a list of available properties
+    // https://firebase.google.com/docs/reference/js/auth.user
+    BlogAppContainer.style.display = 'block'
+    container[0].style.display = 'none'
+
+    const uid = user.uid;
+    // ...
+  } else {
+    // User is signed out
+    // ...
+    BlogAppContainer.style.display = 'none'
+    container[0].style.display = 'flex'
+
+  }
+});
+
 signUpForm.addEventListener('submit' , a => {
 
   a.preventDefault()  
@@ -32,7 +62,9 @@ createUserWithEmailAndPassword(auth, signUpEmail.value, signUpPassword.value ,si
 .then((userCredential) => {
   // Signed up 
   const user = userCredential.user;
-  window.location.href = 'welcome.html'
+  BlogAppContainer.style.display = 'block'
+  container[0].style.display = 'none'
+
   // ...
 })
 .catch((error) => {
@@ -40,6 +72,9 @@ createUserWithEmailAndPassword(auth, signUpEmail.value, signUpPassword.value ,si
   const errorMessage = error.message;
   alert('This email is already signed up')
   signUpPassword.value = '';
+  BlogAppContainer.style.display = 'none'
+  container[0].style.display = 'flex'
+
   // ..
 });
 
@@ -52,8 +87,11 @@ signInForm.addEventListener('submit' ,a => {
     .then((userCredential) => {
       // Signed in 
       const user = userCredential.user;
-      window.location.href = 'welcome.html';
-      
+      BlogAppContainer.style.display = 'block'
+      container[0].style.display = 'none'
+      signUpPassword.value = '';
+      signInPassword.value = '';
+
       // ...
     })
     .catch((error) => {
@@ -62,18 +100,25 @@ signInForm.addEventListener('submit' ,a => {
 
 alert('incorrect Email or Password')
 signInPassword.value= '';
+BlogAppContainer.style.display = 'none'
+container[0].style.display = 'flex'
     });
 
 
 }
 )
 
-
-  let signInTxt = document.getElementById('sign-in-txt');
-  let signInDiv = document.getElementById('sign-in');
-  let signupDiv = document.getElementById('sign-up');
-
-  let signUpTxt = document.getElementById('sign-up-txt');
+logoutBtn.addEventListener('click' , function() {
+  signOut(auth).then(() => {
+    // Sign-out successful.
+    
+BlogAppContainer.style.display = 'none'
+container[0].style.display = 'flex'
+  }).catch((error) => {
+    // An error happened.
+    alert('Some error please try again')
+  });
+})
 
   signUpTxt.addEventListener('click', () => {
 
