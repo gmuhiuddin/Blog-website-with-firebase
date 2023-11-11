@@ -48,8 +48,8 @@ onAuthStateChanged(auth, (user) => {
   } else {
     // User is signed out
     // ...
-    BlogAppContainer.style.display = 'none'
-    container[0].style.display = 'flex'
+    BlogAppContainer.style.display = 'none';
+    container[0].style.display = 'flex';
 
   }
 });
@@ -75,6 +75,9 @@ createUserWithEmailAndPassword(auth, signUpEmail.value, signUpPassword.value ,si
   BlogAppContainer.style.display = 'none'
   container[0].style.display = 'flex'
 
+  signInEmail.value = '';
+  signUpPassword.value = '';
+  signInPassword.value = '';
   // ..
 });
 
@@ -99,9 +102,7 @@ signInForm.addEventListener('submit' ,a => {
       const errorMessage = error.message;
 
 alert('incorrect Email or Password')
-signInPassword.value= '';
-BlogAppContainer.style.display = 'none'
-container[0].style.display = 'flex'
+signInPassword.value= ''; 
     });
 
 
