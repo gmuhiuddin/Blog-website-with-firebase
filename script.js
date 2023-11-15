@@ -1,27 +1,21 @@
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-app.js";
+import { getAuth , signOut , createUserWithEmailAndPassword , onAuthStateChanged , signInWithEmailAndPassword} from "https://www.gstatic.com/firebasejs/10.5.2/firebase-auth.js";
+import { getFirestore , collection, addDoc , deleteDoc  , doc} from "https://www.gstatic.com/firebasejs/10.5.2/firebase-firestore.js";
+
 let signUpUserName = document.getElementById('sign-up-user-name');
 let signUpEmail = document.getElementById('sign-up-user-email');
 let signUpPassword = document.getElementById('sign-up-user-password');
-
 let signInEmail = document.getElementById('user-email');
 let signInPassword = document.getElementById('user-password');
-
 let signUpForm = document.getElementById('sign-up-form');
 let signInForm = document.getElementById('sign-in-form');
-
 let BlogAppContainer = document.getElementById('Blog-app-container');
-
 let signInTxt = document.getElementById('sign-in-txt');
 let signInDiv = document.getElementById('sign-in');
 let signupDiv = document.getElementById('sign-up');
-
 let signUpTxt = document.getElementById('sign-up-txt');
-
 let container = document.getElementsByClassName('container');
-
 let logoutBtn = document.getElementById('logoutBtn');
-
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-app.js";
-import { getAuth , signOut , createUserWithEmailAndPassword , onAuthStateChanged , signInWithEmailAndPassword} from "https://www.gstatic.com/firebasejs/10.5.2/firebase-auth.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDMeG-Yt8eUI3eoSEbLokIk9Fo_fCRTZ3k",
@@ -35,6 +29,7 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+let db = getFirestore(app)
 
 onAuthStateChanged(auth, (user) => {
   if (user) {
@@ -134,3 +129,29 @@ container[0].style.display = 'flex'
     signupDiv.style.display = 'none'
 
   })
+
+  let userText = document.getElementById('user-text');
+  let checkBtn = document.getElementById('checkBtn');
+
+  checkBtn.addEventListener('click' ,async function () {
+    try{
+      const ref = collection(db, 'User info')
+      const docRefer = await addDoc(ref , {
+        userTxt : userText.value
+      })
+checkBtn.id = docRefer.id;
+      console.log('docref id ',docRefer.id)
+    }catch (a) {
+console.log('error',a)
+    }
+console.log("this  id -->",this.id)
+    // const docRef = doc(db, "User info", this.id);
+// const docSnap = await getDocs(db, 'User info');
+
+// console.log(docSnap)
+
+setTimeout(() => {
+deleteDoc(doc(db,'User info',this.id)) 
+  
+}, 10000);
+})
