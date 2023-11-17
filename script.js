@@ -83,7 +83,7 @@ signInForm.addEventListener('submit', a => {
 
     signInWithEmailAndPassword(auth, signInEmail.value, signInPassword.value, signUpUserName.value)
         .then((userCredential) => {
-            // Signed in 
+            // Signed in
             const user = userCredential.user;
             BlogAppContainer.style.display = 'block'
             container[0].style.display = 'none'
@@ -128,30 +128,4 @@ signInTxt.addEventListener('click', () => {
     signInDiv.style.display = 'block'
     signupDiv.style.display = 'none'
 
-})
-
-let userText = document.getElementById('user-text');
-let checkBtn = document.getElementById('checkBtn');
-
-checkBtn.addEventListener('click', async function () {
-    try {
-        const ref = collection(db, 'User info')
-        const docRefer = await addDoc(ref, {
-            userTxt: userText.value
-        })
-        checkBtn.id = docRefer.id;
-        console.log('docref id ', docRefer.id)
-    } catch (a) {
-        console.log('error', a)
-    }
-    console.log("this  id -->", this.id)
-    // const docRef = doc(db, "User info", this.id);
-    // const docSnap = await getDocs(db, 'User info');
-
-    // console.log(docSnap)
-
-    setTimeout(() => {
-        deleteDoc(doc(db, 'User info', this.id))
-
-    }, 10000);
 })
