@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-app.js";
-import { getAuth , signOut , createUserWithEmailAndPassword , onAuthStateChanged , signInWithEmailAndPassword} from "https://www.gstatic.com/firebasejs/10.5.2/firebase-auth.js";
-import { getFirestore , collection, addDoc , deleteDoc  , doc} from "https://www.gstatic.com/firebasejs/10.5.2/firebase-firestore.js";
+import { getAuth, signOut, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-auth.js";
+import { getFirestore, collection, addDoc, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-firestore.js";
 
 let signUpUserName = document.getElementById('sign-up-user-name');
 let signUpEmail = document.getElementById('sign-up-user-email');
@@ -18,13 +18,13 @@ let container = document.getElementsByClassName('container');
 let logoutBtn = document.getElementById('logoutBtn');
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDMeG-Yt8eUI3eoSEbLokIk9Fo_fCRTZ3k",
-  authDomain: "blog-app-9f834.firebaseapp.com",
-  projectId: "blog-app-9f834",
-  storageBucket: "blog-app-9f834.appspot.com",
-  messagingSenderId: "114009764949",
-  appId: "1:114009764949:web:3c7974840f125054e290dc",
-  measurementId: "G-K5QB7B6K9N"
+    apiKey: "AIzaSyDMeG-Yt8eUI3eoSEbLokIk9Fo_fCRTZ3k",
+    authDomain: "blog-app-9f834.firebaseapp.com",
+    projectId: "blog-app-9f834",
+    storageBucket: "blog-app-9f834.appspot.com",
+    messagingSenderId: "114009764949",
+    appId: "1:114009764949:web:3c7974840f125054e290dc",
+    measurementId: "G-K5QB7B6K9N"
 };
 
 const app = initializeApp(firebaseConfig);
@@ -32,126 +32,126 @@ const auth = getAuth(app);
 let db = getFirestore(app)
 
 onAuthStateChanged(auth, (user) => {
-  if (user) {
-    // User is signed in, see docs for a list of available properties
-    // https://firebase.google.com/docs/reference/js/auth.user
-    BlogAppContainer.style.display = 'block'
-    container[0].style.display = 'none'
+    if (user) {
+        // User is signed in, see docs for a list of available properties
+        // https://firebase.google.com/docs/reference/js/auth.user
+        BlogAppContainer.style.display = 'block'
+        container[0].style.display = 'none'
 
-    const uid = user.uid;
-    // ...
-  } else {
-    // User is signed out
-    // ...
-    BlogAppContainer.style.display = 'none';
-    container[0].style.display = 'flex';
+        const uid = user.uid;
+        // ...
+    } else {
+        // User is signed out
+        // ...
+        BlogAppContainer.style.display = 'none';
+        container[0].style.display = 'flex';
 
-  }
+    }
 });
 
-signUpForm.addEventListener('submit' , a => {
+signUpForm.addEventListener('submit', a => {
 
-  a.preventDefault()  
+    a.preventDefault()
 
-createUserWithEmailAndPassword(auth, signUpEmail.value, signUpPassword.value ,signUpUserName.value)
-.then((userCredential) => {
-  // Signed up 
-  const user = userCredential.user;
-  BlogAppContainer.style.display = 'block'
-  container[0].style.display = 'none'
+    createUserWithEmailAndPassword(auth, signUpEmail.value, signUpPassword.value, signUpUserName.value)
+        .then((userCredential) => {
+            // Signed up 
+            const user = userCredential.user;
+            BlogAppContainer.style.display = 'block'
+            container[0].style.display = 'none'
 
-  // ...
+            // ...
+        })
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            alert('This email is already signed up')
+            signUpPassword.value = '';
+            BlogAppContainer.style.display = 'none'
+            container[0].style.display = 'flex'
+
+            signInEmail.value = '';
+            signUpPassword.value = '';
+            signInPassword.value = '';
+            // ..
+        });
+
 })
-.catch((error) => {
-  const errorCode = error.code;
-  const errorMessage = error.message;
-  alert('This email is already signed up')
-  signUpPassword.value = '';
-  BlogAppContainer.style.display = 'none'
-  container[0].style.display = 'flex'
 
-  signInEmail.value = '';
-  signUpPassword.value = '';
-  signInPassword.value = '';
-  // ..
-});
+signInForm.addEventListener('submit', a => {
+    a.preventDefault()
 
-} )
+    signInWithEmailAndPassword(auth, signInEmail.value, signInPassword.value, signUpUserName.value)
+        .then((userCredential) => {
+            // Signed in 
+            const user = userCredential.user;
+            BlogAppContainer.style.display = 'block'
+            container[0].style.display = 'none'
+            signUpPassword.value = '';
+            signInPassword.value = '';
 
-signInForm.addEventListener('submit' ,a => {
-  a.preventDefault()  
+            // ...
+        })
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
 
-  signInWithEmailAndPassword(auth, signInEmail.value, signInPassword.value,signUpUserName.value)
-    .then((userCredential) => {
-      // Signed in 
-      const user = userCredential.user;
-      BlogAppContainer.style.display = 'block'
-      container[0].style.display = 'none'
-      signUpPassword.value = '';
-      signInPassword.value = '';
-
-      // ...
-    })
-    .catch((error) => {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-
-alert('incorrect Email or Password')
-signInPassword.value= ''; 
-    });
+            alert('incorrect Email or Password')
+            signInPassword.value = '';
+        });
 
 
 }
 )
 
-logoutBtn.addEventListener('click' , function() {
-  signOut(auth).then(() => {
-    // Sign-out successful.
+logoutBtn.addEventListener('click', function () {
+    signOut(auth).then(() => {
+        // Sign-out successful.
 
-BlogAppContainer.style.display = 'none'
-container[0].style.display = 'flex'
-  }).catch((error) => {
-    // An error happened.
-    alert('Some error please try again')
-  });
+        BlogAppContainer.style.display = 'none'
+        container[0].style.display = 'flex'
+    }).catch((error) => {
+        // An error happened.
+        alert('Some error please try again')
+    });
 })
 
-  signUpTxt.addEventListener('click', () => {
+signUpTxt.addEventListener('click', () => {
 
     signInDiv.style.display = 'none'
     signupDiv.style.display = 'block'
 
-  })
+})
 
-  signInTxt.addEventListener('click', () => {
+signInTxt.addEventListener('click', () => {
 
     signInDiv.style.display = 'block'
     signupDiv.style.display = 'none'
 
-  })
+})
 
-  let userText = document.getElementById('user-text');
-  let checkBtn = document.getElementById('checkBtn');
+let userText = document.getElementById('user-text');
+let checkBtn = document.getElementById('checkBtn');
 
-  checkBtn.addEventListener('click' ,async function () {
-    try{
-      const ref = collection(db, 'User info')
-      const docRefer = await addDoc(ref , {
-        userTxt : userText.value
-      })
-checkBtn.id = docRefer.id;
-      console.log('docref id ',docRefer.id)
-    }catch (a) {
-console.log('error',a)
+checkBtn.addEventListener('click', async function () {
+    try {
+        const ref = collection(db, 'User info')
+        const docRefer = await addDoc(ref, {
+            userTxt: userText.value
+        })
+        checkBtn.id = docRefer.id;
+        console.log('docref id ', docRefer.id)
+    } catch (a) {
+        console.log('error', a)
     }
-console.log("this  id -->",this.id)
+    console.log("this  id -->", this.id)
     // const docRef = doc(db, "User info", this.id);
-// const docSnap = await getDocs(db, 'User info');
+    // const docSnap = await getDocs(db, 'User info');
 
-// console.log(docSnap)
+    // console.log(docSnap)
 
-setTimeout(() => {
-deleteDoc(doc(db,'User info',this.id)) 
+    setTimeout(() => {
+        deleteDoc(doc(db, 'User info', this.id))
 
-}, 10000);
+    }, 10000);
 })
