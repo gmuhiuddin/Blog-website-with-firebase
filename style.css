@@ -1,128 +1,85 @@
-@font-face {
-    font-family: poppins;
-    src: url(Poppins-Medium.ttf);
-}
-
-* {
-    font-family: poppins;
+body{
     margin: 0px;
     padding: 0px;
 }
-
-.permit-container{
-    width: 399px;
-}
-
-.container {
+.container{
     display: flex;
     justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
 }
-
-hr {
-    margin: 0 auto;
-    height: 3px;
-    width: 79px;
-    background-color: rgb(203, 151, 77);
+#sign-up{
+    background-color: black;
+    color: white;
+    height: 459px;
+    width: 479px;
     border-radius: 12px;
-    cursor: pointer;
-    margin-top: 27px;
-}
-
-#barcode {
     display: block;
-    margin: 19px auto;
-    height: 149px;
-    width: 159px;
-    border: 5px solid rgb(203, 151, 77);
 }
-
-#name {
-    margin: 31px 0px;
+#sign-in{
+    background-color: black;
+    color: white;
+    height: 459px;
+    width: 479px;
+    border-radius: 12px;
+    display: none;
+}
+.Sign-up-heading{
     text-align: center;
 }
-
-#txt {
+.Sign-in-heading{
     text-align: center;
-    color: rgb(203, 151, 77);
 }
-
-#permit-details-txt {
-    margin-left: 43px;
+label{
+    margin: 0 49px;
 }
-
-#issued-by-txt {
-    margin-left: 65px;
-    font-size: 19px;
+input{
+    margin: 0 49px;
+    width: 359px;
+    height: 29px;
+    border-radius: 12px;
+    padding: 1px 9px;
+    box-shadow: none;
+    box-shadow: 5px 5px 12px black;
+    border: none;
 }
-
-#man-icon {
-    height: 37px;
-    width: 39px;
-    margin-bottom: 13px;
-    margin-left: 33px;
-}
-
-#Name-img-txt {
-    display: flex;
-    align-items: center;
-}
-
-#allowe-to-masjid-txt {
-    margin-left: 37px;
-}
-
-#day-txt {
-    margin-left: 67px;
-    font-size: 17px;
-}
-
-#date-img-txt {
-    display: flex;
-    align-items: center;
-}
-
-#date-icon {
-    font-size: 31px;
-    margin-bottom: 9px;
-    margin-right: 11px;
-    margin-left: 37px;
-    color: rgb(203, 151, 77);
-}
-
-.day-date-container {
-    display: flex;
-}
-
-.time-container {
-    margin-left: 49px;
-}
-
-#time-txt {
-    margin-left: 51px;
-    font-size: 17px;
-}
-
-#time-icon {
-    font-size: 31px;
-    margin-bottom: 9px;
-    margin-right: 11px;
-    margin-left: 11px;
-    color: rgb(203, 151, 77);
-}
-
-#time-img-txt {
-    display: flex;
-    align-items: center;
-}
-
-#islamic-date-txt {
-    margin-top: 17px;
-    margin-left: 59px;
-}
-
-#exit-btn {
-    color: rgb(203, 151, 77);
-    font-size: 19px;
+#sign-up-btn{
+    margin: 0 39px;
+    width: 399px;
+    height: 29px;
+    border-radius: 12px;
+    outline: none;
+    border: none;
     cursor: pointer;
-    margin-left: 309px;
+}
+.txt{
+    text-align: center;
+}
+#sign-in-txt{
+    color: blue;
+    cursor: pointer;
+}
+#sign-in-txt:hover{
+    color: rgb(106, 101, 249);
+}
+#sign-in-btn{
+    margin: 0 39px;
+    width: 399px;
+    height: 29px;
+    border-radius: 12px;
+    outline: none;
+    border: none;
+    cursor: pointer;
+}
+#sign-up-txt{
+    color: blue;
+    cursor: pointer;
+}
+#sign-up-txt:hover{
+    color: rgb(106, 101, 249);
+}
+#Blog-app-container{
+display: none;
+text-align: center;
 }

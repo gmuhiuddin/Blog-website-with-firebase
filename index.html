@@ -4,69 +4,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ria-zul-jannah-permit</title>
+    <title>Authentication-Page</title>
     <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
-        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
+
 <body>
     <div class="container">
-        <div class="permit-container">
-            <hr>
+        <div id="sign-up">
+            <h1 class="Sign-up-heading">Sign Up</h1>
+            <form id="sign-up-form">
+                <label for="username">Name</label>
+                <br>
+                <br>
+                <input type="text" required id="sign-up-user-name" />
+                <br>
+                <br>
+                <label for="user-email">Email</label>
+                <br>
+                <br>
+                <input type="email" required id="sign-up-user-email">
+                <br>
+                <br>
+                <label for="user-password">Password</label>
+                <br>
+                <br>
+                <input minlength="8" type="password" required id="sign-up-user-password">
+                <br>
+                <br>
+                <br>
+                <button type="submit" id="sign-up-btn">Sign up</button>
+            </form>
             <br>
-            <img id="barcode" src="https://cdn.ttgtmedia.com/rms/misc/qr_code_barcode.jpg" alt="qr_code">
-            <h3 id="name">GHULAM MUHIUDDIN</h3>
-            <h4 id="txt">Praying in the Noble Rawdah- Men
-                <br />
-                <br />
-                Registration Number: 101890543
-                <br />
-                <br />
-                Permit Number: 1034567290
-            </h4>
-            <br>
-            <br>
-            <br>
-            <p id="permit-details-txt">Permit Details</p>
-            <br>
-            <br>
-            <span id="issued-by-txt">Issued By</span>
-            <br>
-            <h3 id="Name-img-txt">
-                <img id="man-icon"
-                    src="https://icons-for-free.com/iconfiles/png/512/man+person+profile+user+worker+icon-1320190557331309792.png"
-                    alt="human-icon">
-
-                GHULAM MUHIUDDIN
-            </h3>
-            <br />
-            <p id="allowe-to-masjid-txt">Allowed to access Al Masjid an Nabawi in the
-                <br /> days
-            </p>
-            <br>
-            <div class="day-date-container">
-                <div class="day-container">
-                    <span id="day-txt">Day</span>
-                    <p id="date-img-txt">
-                        <i id="date-icon" class="fa-regular fa-calendar-days"></i>
-                        18 Mar 2024
-                    </p>
-                </div>
-
-                <div class="time-container">
-                    <span id="time-txt">Time</span>
-                    <p id="time-img-txt">
-                        <i id="time-icon" class="fa-regular fa-clock"></i>
-                        00:30-00:59
-                    </p>
-                </div>
-            </div>
-            <p id="islamic-date-txt">08 Sha`ban,1445</p>
-            <br />
-            <span id="exit-btn">Exit</span>
+            <p class="txt">You already have an account <a id="sign-in-txt">Sign in</a></p>
+        </div>
+        <div id="sign-in">
+            <h1 class="Sign-in-heading">Sign In</h1>
+            <form id="sign-in-form" >
+                <label for="user-email">Email</label>
+                <br>
+                <br>
+                <input type="email" required id="user-email">
+                <br>
+                <br>
+                <label for="user-password">Password</label>
+                <br>
+                <br>
+                <input minlength="8" type="password" required id="user-password">
+                <br>
+                <br>
+                <br>
+                <button type="submit" id="sign-in-btn">Sign In</button>
+            </form>
+            <p class="txt">You don`t have an account <a id="sign-up-txt">Sign up</a></p>
         </div>
     </div>
-    <script src="script.js"></script>
+    <div id="Blog-app-container">
+        <h1 class="welcome-txt">Welcome to Blog app</h1>
+        <button id="logoutBtn">log out</button>
+        <input type="text" id="user-text">
+        <button id="checkBtn">Check</button>
+    </div>
+    <script type="module" src="script.js"></script>
 </body>
 </html>
