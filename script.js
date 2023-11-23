@@ -5,6 +5,7 @@ import { getFirestore, collection, addDoc, deleteDoc, doc } from "https://www.gs
 let signUpUserName = document.getElementById('sign-up-user-first-name');
 let signUpEmail = document.getElementById('sign-up-user-email');
 let signUpPassword = document.getElementById('sign-up-user-password');
+let signUpRepeatPassword = document.getElementById('sign-up-user-repeat-password');
 let signInEmail = document.getElementById('user-email');
 let signInPassword = document.getElementById('user-password');
 let signUpForm = document.getElementById('sign-up-form');
@@ -49,32 +50,47 @@ onAuthStateChanged(auth, (user) => {
     }
 });
 
+signInPassword.addEventListener('focus', () => {
+    signUpRepeatPassword.style.borderColor = 'rgb(98, 94, 94)';
+})
+
+signUpRepeatPassword.addEventListener('focus', () => {
+    signUpRepeatPassword.style.borderColor = 'rgb(98, 94, 94)';
+})
+
 signUpForm.addEventListener('submit', a => {
 
     a.preventDefault()
+    if (signUpPassword.value == signUpRepeatPassword.value) {
 
-    createUserWithEmailAndPassword(auth, signUpEmail.value, signUpPassword.value, signUpUserName.value)
-        .then((userCredential) => {
-            // Signed up 
-            const user = userCredential.user;
-            BlogAppContainer.style.display = 'block'
-            container[0].style.display = 'none'
+        createUserWithEmailAndPassword(auth, signUpEmail.value, signUpPassword.value)
+            .then((userCredential) => {
+                // Signed up 
+                const user = userCredential.user;
+                BlogAppContainer.style.display = 'block'
+                container[0].style.display = 'none'
 
-            // ...
-        })
-        .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            alert('This email is already signed up')
-            signUpPassword.value = '';
-            BlogAppContainer.style.display = 'none'
-            container[0].style.display = 'flex'
+                // ...
+            })
+            .catch((error) => {
+                const errorCode = error.code;
+                const errorMessage = error.message;
+                alert('This email is already signed up')
+                signUpPassword.value = '';
+                BlogAppContainer.style.display = 'none'
+                container[0].style.display = 'flex'
 
-            signInEmail.value = '';
-            signUpPassword.value = '';
-            signInPassword.value = '';
-            // ..
-        });
+                signInEmail.value = '';
+                signUpPassword.value = '';
+                signInPassword.value = '';
+                signUpRepeatPassword.value = '';
+                // ..
+            });
+    } else {
+        signUpRepeatPassword.style.borderColor = 'red';
+        signUpRepeatPassword.style.boxShadow = '0px 0px 5px red';
+        signUpRepeatPassword.value = '';
+    }
 
 })
 
@@ -89,15 +105,15 @@ signInForm.addEventListener('submit', a => {
             container[0].style.display = 'none'
             signUpPassword.value = '';
             signInPassword.value = '';
-
             // ...
         })
         .catch((error) => {
             const errorCode = error.code;
             const errorMessage = error.message;
 
-            alert('incorrect Email or Password')
             signInPassword.value = '';
+            signInPassword.style.borderColor = 'red';
+            signInPassword.style.boxShadow = '0px 0px 5px red';
         });
 
 

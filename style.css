@@ -33,7 +33,6 @@ body {
     text-align: center;
 }
 
-
 input {
     display: block;
     margin: 0 auto;
@@ -43,6 +42,7 @@ input {
     padding: 1px 9px;
     box-shadow: none;
     border: 1px solid rgb(98, 94, 94);
+    outline: none;
 }
 
 #sign-up-btn {
