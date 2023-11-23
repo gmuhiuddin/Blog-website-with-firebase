@@ -2,7 +2,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.2/firebas
 import { getAuth, signOut, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-auth.js";
 import { getFirestore, collection, addDoc, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-firestore.js";
 
-let signUpUserName = document.getElementById('sign-up-user-name');
+let signUpUserName = document.getElementById('sign-up-user-first-name');
 let signUpEmail = document.getElementById('sign-up-user-email');
 let signUpPassword = document.getElementById('sign-up-user-password');
 let signInEmail = document.getElementById('user-email');

@@ -12,20 +12,16 @@ body {
 }
 
 #sign-up {
-    background-color: black;
-    color: white;
-    height: 459px;
-    width: 479px;
-    border-radius: 12px;
+    box-shadow: 1px 1px 7px black;
+    height: 449px;
+    width: 389px;
     display: block;
 }
 
 #sign-in {
-    background-color: black;
-    color: white;
-    height: 459px;
-    width: 479px;
-    border-radius: 12px;
+    box-shadow: 1px 1px 7px black;
+    height: 319px;
+    width: 389px;
     display: none;
 }
 
@@ -37,26 +33,26 @@ body {
     text-align: center;
 }
 
-label {
-    margin: 0 49px;
-}
 
 input {
-    margin: 0 49px;
-    width: 359px;
+    display: block;
+    margin: 0 auto;
+    width: 209px;
     height: 29px;
-    border-radius: 12px;
+    border-radius: 9px;
     padding: 1px 9px;
     box-shadow: none;
-    box-shadow: 5px 5px 12px black;
-    border: none;
+    border: 1px solid rgb(98, 94, 94);
 }
 
 #sign-up-btn {
-    margin: 0 39px;
-    width: 399px;
-    height: 29px;
-    border-radius: 12px;
+    display: block;
+    margin: 0 auto;
+    width: 79px;
+    height: 35px;
+    border-radius: 5px;
+    color: white;
+    background-color: rgb(128, 25, 207);
     outline: none;
     border: none;
     cursor: pointer;
@@ -76,10 +72,13 @@ input {
 }
 
 #sign-in-btn {
-    margin: 0 39px;
-    width: 399px;
-    height: 29px;
-    border-radius: 12px;
+    display: block;
+    margin: 0 auto;
+    width: 79px;
+    height: 35px;
+    border-radius: 5px;
+    color: white;
+    background-color: rgb(128, 25, 207);
     outline: none;
     border: none;
     cursor: pointer;
