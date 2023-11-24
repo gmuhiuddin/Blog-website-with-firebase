@@ -69,7 +69,9 @@ signUpForm.addEventListener('submit', a => {
                 const user = userCredential.user;
                 BlogAppContainer.style.display = 'block'
                 container[0].style.display = 'none'
-
+                signUpPassword.value = '';
+                signUpRepeatPassword.value = '';
+                signInPassword.value = '';
                 // ...
             })
             .catch((error) => {
@@ -104,6 +106,7 @@ signInForm.addEventListener('submit', a => {
             BlogAppContainer.style.display = 'block'
             container[0].style.display = 'none'
             signUpPassword.value = '';
+            signUpRepeatPassword.value = '';
             signInPassword.value = '';
             // ...
         })
