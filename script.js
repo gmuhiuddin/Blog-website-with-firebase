@@ -1,8 +1,9 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-app.js";
 import { getAuth, signOut, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-auth.js";
-import { getFirestore, collection, addDoc, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-firestore.js";
+import { getFirestore, collection, addDoc, deleteDoc, doc , setDoc , getDoc} from "https://www.gstatic.com/firebasejs/10.5.2/firebase-firestore.js";
 
 let signUpUserName = document.getElementById('sign-up-user-first-name');
+let signUpUserLastName = document.getElementById('sign-up-user-last-name');
 let signUpEmail = document.getElementById('sign-up-user-email');
 let signUpPassword = document.getElementById('sign-up-user-password');
 let signUpRepeatPassword = document.getElementById('sign-up-user-repeat-password');
@@ -16,6 +17,7 @@ let signInDiv = document.getElementById('sign-in');
 let signupDiv = document.getElementById('sign-up');
 let signUpTxt = document.getElementById('sign-up-txt');
 let container = document.getElementsByClassName('container');
+let userNameP = document.getElementById('userNameP');
 let logoutBtn = document.getElementById('logoutBtn');
 
 const firebaseConfig = {
@@ -31,15 +33,17 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 let db = getFirestore(app)
+let userId = '';
 
-onAuthStateChanged(auth, (user) => {
+onAuthStateChanged(auth, async (user) => {
     if (user) {
         // User is signed in, see docs for a list of available properties
         // https://firebase.google.com/docs/reference/js/auth.user
         BlogAppContainer.style.display = 'block'
         container[0].style.display = 'none'
 
-        const uid = user.uid;
+     userId = user.uid;
+
         // ...
     } else {
         // User is signed out
@@ -51,27 +55,35 @@ onAuthStateChanged(auth, (user) => {
 });
 
 signInPassword.addEventListener('focus', () => {
-    signUpRepeatPassword.style.borderColor = 'rgb(98, 94, 94)';
+    signInPassword.style.borderColor = 'rgb(98, 94, 94)';
+    signInPassword.style.boxShadow = 'none';
 })
 
 signUpRepeatPassword.addEventListener('focus', () => {
     signUpRepeatPassword.style.borderColor = 'rgb(98, 94, 94)';
+    signUpRepeatPassword.style.boxShadow = 'none';
+
 })
 
-signUpForm.addEventListener('submit', a => {
-
+signUpForm.addEventListener('submit',  a => {
+    
     a.preventDefault()
+
     if (signUpPassword.value == signUpRepeatPassword.value) {
 
         createUserWithEmailAndPassword(auth, signUpEmail.value, signUpPassword.value)
-            .then((userCredential) => {
+            .then(async (userCredential) => {
                 // Signed up 
-                const user = userCredential.user;
+                 userId = userCredential.user.uid;
                 BlogAppContainer.style.display = 'block'
                 container[0].style.display = 'none'
                 signUpPassword.value = '';
                 signUpRepeatPassword.value = '';
                 signInPassword.value = '';
+               await setDoc(doc(db,'userName',userId),{
+                    firstname : signUpUserName.value,
+                    lastname:signUpUserLastName.value
+                })
                 // ...
             })
             .catch((error) => {
@@ -108,6 +120,7 @@ signInForm.addEventListener('submit', a => {
             signUpPassword.value = '';
             signUpRepeatPassword.value = '';
             signInPassword.value = '';
+
             // ...
         })
         .catch((error) => {
@@ -148,3 +161,4 @@ signInTxt.addEventListener('click', () => {
     signupDiv.style.display = 'none'
 
 })
+

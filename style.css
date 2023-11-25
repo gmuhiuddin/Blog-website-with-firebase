@@ -13,24 +13,27 @@ body {
 
 #sign-up {
     box-shadow: 1px 1px 7px black;
-    height: 449px;
+    height: 429px;
     width: 389px;
     display: block;
 }
 
 #sign-in {
     box-shadow: 1px 1px 7px black;
-    height: 319px;
+    height: 279px;
     width: 389px;
     display: none;
 }
 
+
 .Sign-up-heading {
     text-align: center;
+    color: rgb(63, 61, 61);
 }
 
 .Sign-in-heading {
     text-align: center;
+    color: rgb(63, 61, 61);
 }
 
 input {
@@ -60,6 +63,7 @@ input {
 
 .txt {
     text-align: center;
+    font-size: 18px;
 }
 
 #sign-in-txt {
