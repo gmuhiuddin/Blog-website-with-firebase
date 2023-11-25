@@ -4,7 +4,7 @@ body {
 }
 
 .container {
-    display: flex;
+    display: none;
     justify-content: center;
     align-items: center;
     width: 100%;
@@ -24,7 +24,6 @@ body {
     width: 389px;
     display: none;
 }
-
 
 .Sign-up-heading {
     text-align: center;
@@ -101,3 +100,31 @@ input {
     display: none;
     text-align: center;
 }
+
+
+
+#loader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.loader {
+
+    width: 191px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background:
+        radial-gradient(farthest-side, rgb(128, 25, 207) 94%, #0000) top/8px 8px no-repeat,
+        conic-gradient(#0000 30%, rgb(128, 25, 207));
+    -webkit-mask: radial-gradient(farthest-side, #0000 calc(100% - 25px), #000 0);
+    animation: l13 1s infinite linear;
+}
+
+@keyframes l13 {
+    100% {
+        transform: rotate(1turn)
+    }
+}
+

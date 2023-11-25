@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-app.js";
 import { getAuth, signOut, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-auth.js";
-import { getFirestore, collection, addDoc, deleteDoc, doc , setDoc , getDoc} from "https://www.gstatic.com/firebasejs/10.5.2/firebase-firestore.js";
+import { getFirestore, collection, addDoc, deleteDoc, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-firestore.js";
 
 let signUpUserName = document.getElementById('sign-up-user-first-name');
 let signUpUserLastName = document.getElementById('sign-up-user-last-name');
@@ -17,7 +17,7 @@ let signInDiv = document.getElementById('sign-in');
 let signupDiv = document.getElementById('sign-up');
 let signUpTxt = document.getElementById('sign-up-txt');
 let container = document.getElementsByClassName('container');
-let userNameP = document.getElementById('userNameP');
+let loader = document.getElementById('loader');
 let logoutBtn = document.getElementById('logoutBtn');
 
 const firebaseConfig = {
@@ -41,8 +41,8 @@ onAuthStateChanged(auth, async (user) => {
         // https://firebase.google.com/docs/reference/js/auth.user
         BlogAppContainer.style.display = 'block'
         container[0].style.display = 'none'
-
-     userId = user.uid;
+        loader.style.display = 'none';
+        userId = user.uid;
 
         // ...
     } else {
@@ -50,6 +50,7 @@ onAuthStateChanged(auth, async (user) => {
         // ...
         BlogAppContainer.style.display = 'none';
         container[0].style.display = 'flex';
+        loader.style.display = 'none';
 
     }
 });
@@ -65,8 +66,8 @@ signUpRepeatPassword.addEventListener('focus', () => {
 
 })
 
-signUpForm.addEventListener('submit',  a => {
-    
+signUpForm.addEventListener('submit', a => {
+
     a.preventDefault()
 
     if (signUpPassword.value == signUpRepeatPassword.value) {
@@ -74,15 +75,15 @@ signUpForm.addEventListener('submit',  a => {
         createUserWithEmailAndPassword(auth, signUpEmail.value, signUpPassword.value)
             .then(async (userCredential) => {
                 // Signed up 
-                 userId = userCredential.user.uid;
+                userId = userCredential.user.uid;
                 BlogAppContainer.style.display = 'block'
                 container[0].style.display = 'none'
                 signUpPassword.value = '';
                 signUpRepeatPassword.value = '';
                 signInPassword.value = '';
-               await setDoc(doc(db,'userName',userId),{
-                    firstname : signUpUserName.value,
-                    lastname:signUpUserLastName.value
+                await setDoc(doc(db, 'userName', userId), {
+                    firstname: signUpUserName.value,
+                    lastname: signUpUserLastName.value
                 })
                 // ...
             })
@@ -90,7 +91,7 @@ signUpForm.addEventListener('submit',  a => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
                 alert('This email is already signed up')
-                signUpPassword.value = '';
+
                 BlogAppContainer.style.display = 'none'
                 container[0].style.display = 'flex'
 
@@ -161,4 +162,3 @@ signInTxt.addEventListener('click', () => {
     signupDiv.style.display = 'none'
 
 })
-
