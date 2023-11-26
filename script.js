@@ -12,13 +12,14 @@ let signInPassword = document.getElementById('user-password');
 let signUpForm = document.getElementById('sign-up-form');
 let signInForm = document.getElementById('sign-in-form');
 let BlogAppContainer = document.getElementById('Blog-app-container');
-let signInTxt = document.getElementById('sign-in-txt');
 let signInDiv = document.getElementById('sign-in');
 let signupDiv = document.getElementById('sign-up');
-let signUpTxt = document.getElementById('sign-up-txt');
 let container = document.getElementsByClassName('container');
 let loader = document.getElementById('loader');
 let logoutBtn = document.getElementById('logoutBtn');
+let nextWhichThing = document.getElementsByClassName('nextWhichThing');
+let whichThing = document.getElementById('whichThing');
+
 
 const firebaseConfig = {
     apiKey: "AIzaSyDMeG-Yt8eUI3eoSEbLokIk9Fo_fCRTZ3k",
@@ -149,16 +150,20 @@ logoutBtn.addEventListener('click', function () {
     });
 })
 
-signUpTxt.addEventListener('click', () => {
+nextWhichThing[0].addEventListener('click' , checkPage)
+checkPage()
 
-    signInDiv.style.display = 'none'
-    signupDiv.style.display = 'block'
+function checkPage (){
+    if(BlogAppContainer.style.display == 'none' && signInDiv.style.display == 'none' && signupDiv.style.display == 'block'){;
+        nextWhichThing[0].innerText = 'Sign up'
+        whichThing.innerText = 'Login'
+        signInDiv.style.display = 'block'
+        signupDiv.style.display = 'none'
+    }else{
+        whichThing.innerText = 'Sign up'
 
-})
-
-signInTxt.addEventListener('click', () => {
-
-    signInDiv.style.display = 'block'
-    signupDiv.style.display = 'none'
-
-})
+        nextWhichThing[0].innerText = 'Login'
+        signInDiv.style.display = 'none'
+        signupDiv.style.display = 'block'
+    }
+}

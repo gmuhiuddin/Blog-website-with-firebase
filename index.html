@@ -11,13 +11,23 @@
 </head>
 
 <body>
+    <header>
+        <nav class="firstNav">
+            <h1 class="Personal-Blogging-App-txt">Personal Blogging App</h1><span class="nextWhichThing">a</span>
+        </nav>
+        <nav class="secondNav">
+            <span id="whichThing">Signup</span>
+        </nav>
+    </header>
     <div id="loader">
         <div class="loader"></div>
     </div>
     <div class="container">
         <div id="sign-up">
-            <h1 class="Sign-up-heading">Sign Up</h1>
             <form id="sign-up-form">
+                <br>
+                <br>
+                <br>
                 <input type="text" placeholder="First Name" required id="sign-up-user-first-name" />
                 <br>
                 <input type="text" placeholder="Last Name" required id="sign-up-user-last-name" />
@@ -31,18 +41,18 @@
                 <br>
                 <button type="submit" id="sign-up-btn">Sign up</button>
             </form>
-            <p class="txt">You already have an account <a id="sign-in-txt">login</a></p>
         </div>
         <div id="sign-in">
-            <h1 class="Sign-in-heading">Login</h1>
             <form id="sign-in-form">
+                <br>
+                <br>
+                <br>
                 <input type="email" placeholder="Email" required id="user-email">
                 <br>
                 <input minlength="8" placeholder="Password" type="password" required id="user-password">
                 <br>
                 <button type="submit" id="sign-in-btn">Login</button>
             </form>
-            <p class="txt">You don`t have an account <a id="sign-up-txt">Sign up</a></p>
         </div>
     </div>
     <div id="Blog-app-container">
