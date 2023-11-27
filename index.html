@@ -10,54 +10,64 @@
 </head>
 
 <body>
-    <header>
+    <div class="navbar">
         <nav class="firstNav">
-            <h1 class="Personal-Blogging-App-txt">Personal Blogging App</h1><span class="nextWhichThing"></span>
+            <h1 class="Personal-Blogging-App-txt">Personal Blogging App</h1>
+            <p class="navbarSecondTxt"><span id="userName"></span> <span class="nextWhichThing"></span></p>
         </nav>
         <nav class="secondNav">
             <span id="whichThing"></span>
         </nav>
-    </header>
+    </div>
+
     <div id="loader">
         <div class="loader"></div>
     </div>
-    <main>
-        <div class="container">
-            <div id="sign-up">
-                <form id="sign-up-form">
-                    <br>
-                    <br>
-                    <br>
-                    <input type="text" placeholder="First Name" required id="sign-up-user-first-name" />
-                    <br>
-                    <input type="text" placeholder="Last Name" required id="sign-up-user-last-name" />
-                    <br>
-                    <input type="email" placeholder="Email" required id="sign-up-user-email">
-                    <br>
-                    <input minlength="8" placeholder="Password" type="password" required id="sign-up-user-password">
-                    <br>
-                    <input minlength="8" placeholder="Repeat Password" type="password" required
-                        id="sign-up-user-repeat-password">
-                    <br>
-                    <button type="submit" id="sign-up-btn">Sign up</button>
-                </form>
-            </div>
-            <div id="sign-in">
-                <form id="sign-in-form">
-                    <br>
-                    <br>
-                    <br>
-                    <input type="email" placeholder="Email" required id="user-email">
-                    <br>
-                    <input minlength="8" placeholder="Password" type="password" required id="user-password">
-                    <br>
-                    <button type="submit" id="sign-in-btn">Login</button>
-                </form>
-            </div>
+    <div class="container">
+        <div id="sign-up">
+            <form id="sign-up-form">
+                <br>
+                <br>
+                <input class="input" type="text" placeholder="First Name" required id="sign-up-user-first-name" />
+                <br>
+                <input class="input" type="text" placeholder="Last Name" required id="sign-up-user-last-name" />
+                <br>
+                <input class="input" type="email" placeholder="Email" required id="sign-up-user-email">
+                <br>
+                <input class="input" minlength="8" placeholder="Password" type="password" required
+                    id="sign-up-user-password">
+                <br>
+                <input class="input" minlength="8" placeholder="Repeat Password" type="password" required
+                    id="sign-up-user-repeat-password">
+                <br>
+                <button type="submit" id="sign-up-btn">Sign up</button>
+            </form>
         </div>
-        <div id="Blog-app-container">
+        <div id="sign-in">
+            <form id="sign-in-form">
+                <br>
+                <br>
+                <input class="input" type="email" placeholder="Email" required id="user-email">
+                <br>
+                <input class="input" minlength="8" placeholder="Password" type="password" required id="user-password">
+                <br>
+                <button type="submit" id="sign-in-btn">Login</button>
+            </form>
         </div>
-    </main>
+    </div>
+    <div id="Blog-app-container">
+        <div class="blogInputContainer">
+            <form id="blog-form">
+                <br>
+                <br>
+                <input required id="userPlaceholder" type="text" placeholder="Placeholder">
+                <br>
+                <textarea required id="userMindTxt" placeholder="What is in your mind" type="text"></textarea>
+                <br>
+                <button id="submitBtn" type="submit">Publish blog</button>
+            </form>
+        </div>
+    </div>
     <script type="module" src="script.js"></script>
 </body>
 

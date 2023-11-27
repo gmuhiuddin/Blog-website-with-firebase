@@ -18,6 +18,7 @@ let container = document.getElementsByClassName('container');
 let loader = document.getElementById('loader');
 let nextWhichThing = document.getElementsByClassName('nextWhichThing');
 let whichThing = document.getElementById('whichThing');
+let userName = document.getElementById('userName');
 
 const firebaseConfig = {
     apiKey: "AIzaSyDMeG-Yt8eUI3eoSEbLokIk9Fo_fCRTZ3k",
@@ -34,6 +35,8 @@ const auth = getAuth(app);
 let db = getFirestore(app)
 let userId = '';
 
+nextWhichThing[0].addEventListener('click', checkPage)
+
 onAuthStateChanged(auth, async (user) => {
     if (user) {
         // User is signed in, see docs for a list of available properties
@@ -43,7 +46,9 @@ onAuthStateChanged(auth, async (user) => {
         loader.style.display = 'none';
         userId = user.uid;
         checkPage()
-
+        let userNameObj = await getDoc(doc(db, 'userName', userId))
+        let { firstname, lastname } = userNameObj.data()
+        userName.innerText = `${firstname} ${lastname}`
         // ...
     } else {
         // User is signed out
@@ -52,7 +57,6 @@ onAuthStateChanged(auth, async (user) => {
         container[0].style.display = 'flex';
         loader.style.display = 'none';
         checkPage()
-
     }
 });
 
@@ -138,8 +142,6 @@ signInForm.addEventListener('submit', a => {
 }
 )
 
-nextWhichThing[0].addEventListener('click', checkPage)
-
 function checkPage() {
     if (BlogAppContainer.style.display == 'none' && signInDiv.style.display == 'none' && signupDiv.style.display == 'block') {
         ;
@@ -167,6 +169,8 @@ function checkPage() {
 
                 BlogAppContainer.style.display = 'none'
                 container[0].style.display = 'flex'
+                userName.innerText = null
+
                 checkPage()
             }).catch((error) => {
                 // An error happened.

@@ -1,10 +1,24 @@
+@font-face {
+    font-family: poppins;
+    src: url(Poppins-Medium.ttf);
+}
+
+* {
+    font-family: poppins;
+}
+
 body {
     margin: 0px;
     padding: 0px;
 }
 
-.firstNav {
+.navbar {
+    top: 0%;
     position: fixed;
+    width: 100%;
+}
+
+.firstNav {
     background-color: rgb(128, 25, 207);
     height: 55px;
     width: 100%;
@@ -17,27 +31,35 @@ body {
 .secondNav {
     height: 79px;
     width: 100%;
-    position: fixed;
-    margin-top: 51px;
     box-shadow: 0px 0.1px 3px gray;
     display: flex;
     align-items: center;
+    background-color: white;
 }
 
 .Personal-Blogging-App-txt {
     margin-left: 99px;
-    font-size: 29px;
+    font-size: 25px;
+}
+
+.navbarSecondTxt {
+    margin-right: 100px;
 }
 
 #whichThing {
-    font-size: 35px;
+    font-size: 31px;
     font-weight: 600;
     margin-left: 99px;
 }
 
+#userName {
+    margin-right: 41px;
+    font-size: 21px;
+    /* font-weight: 200; */
+}
+
 .nextWhichThing {
     font-size: 19px;
-    margin-right: 99px;
     cursor: pointer;
 }
 
@@ -52,7 +74,7 @@ body {
 #sign-up {
     margin-top: 99px;
     box-shadow: 1px 1px 7px black;
-    height: 379px;
+    height: 399px;
     width: 389px;
     display: block;
 }
@@ -60,12 +82,12 @@ body {
 #sign-in {
     margin-top: 99px;
     box-shadow: 1px 1px 7px black;
-    height: 219px;
+    height: 229px;
     width: 389px;
     display: none;
 }
 
-input {
+.input {
     display: block;
     margin: 0 auto;
     width: 209px;
@@ -112,10 +134,8 @@ input {
 
 #Blog-app-container {
     display: none;
-    text-align: center;
+    margin-top: 139px;
 }
-
-
 
 #loader {
     display: flex;
@@ -125,7 +145,6 @@ input {
 }
 
 .loader {
-
     width: 191px;
     aspect-ratio: 1;
     border-radius: 50%;
@@ -140,4 +159,49 @@ input {
     100% {
         transform: rotate(1turn)
     }
+}
+
+.blogInputContainer {
+    margin-top: 181px;
+    box-shadow: 0px 0.1px 3px gray;
+    border-radius: 5px;
+    height: 399px;
+    width: 799px;
+    margin-left: 99px;
+}
+
+#userPlaceholder {
+    display: block;
+    margin: 0 auto;
+    width: 601px;
+    height: 31px;
+    border-radius: 9px;
+    padding: 1px 9px;
+    border: 1px solid rgb(98, 94, 94);
+    outline: none;
+    font-size: 15px;
+}
+
+#userMindTxt {
+    display: block;
+    margin: 0 auto;
+    max-width: 601px;
+    max-height: 131px;
+    min-width: 601px;
+    min-height: 131px;
+    border-radius: 9px;
+    padding: 1px 9px;
+    border: 1px solid rgb(98, 94, 94);
+    outline: none;
+    font-size: 15px;
+}
+
+#submitBtn {
+    margin-left: 89px;
+    border-radius: 9px;
+    border: none;
+    height: 35px;
+    width: 129px;
+    background-color: rgb(128, 25, 207);
+    color: white;
 }
