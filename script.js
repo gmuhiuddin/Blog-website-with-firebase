@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-app.js";
 import { getAuth, signOut, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-auth.js";
-import { getFirestore, collection, addDoc, deleteDoc, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-firestore.js";
+import { getFirestore, collection, addDoc, deleteDoc, doc, setDoc, getDoc, getDocs, updateDoc} from "https://www.gstatic.com/firebasejs/10.5.2/firebase-firestore.js";
 
 let signUpUserName = document.getElementById('sign-up-user-first-name');
 let signUpUserLastName = document.getElementById('sign-up-user-last-name');
@@ -18,7 +18,10 @@ let container = document.getElementsByClassName('container');
 let loader = document.getElementById('loader');
 let nextWhichThing = document.getElementsByClassName('nextWhichThing');
 let whichThing = document.getElementById('whichThing');
-let userName = document.getElementById('userName');
+let userNameHtml = document.getElementById('userName');
+let blogForm = document.getElementById('blog-form'); 
+let divForBlogAdd = document.getElementById('divForBlogAdd'); 
+let myallBlogs = document.getElementById('myallBlogs'); 
 
 const firebaseConfig = {
     apiKey: "AIzaSyDMeG-Yt8eUI3eoSEbLokIk9Fo_fCRTZ3k",
@@ -34,6 +37,8 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 let db = getFirestore(app)
 let userId = '';
+let userName = '';
+let userImg = '';
 
 nextWhichThing[0].addEventListener('click', checkPage)
 
@@ -48,17 +53,59 @@ onAuthStateChanged(auth, async (user) => {
         checkPage()
         let userNameObj = await getDoc(doc(db, 'userName', userId))
         let { firstname, lastname } = userNameObj.data()
-        userName.innerText = `${firstname} ${lastname}`
+        userName = `${firstname} ${lastname}`
+        userNameHtml.innerText = userName;
+        myallBlogs.innerText = 'My Blogs';
         // ...
     } else {
         // User is signed out
         // ...
+        myallBlogs.innerText = 'All Blogs';
         BlogAppContainer.style.display = 'none';
         container[0].style.display = 'flex';
         loader.style.display = 'none';
         checkPage()
+
     }
 });
+
+function checkPage() {
+    if (BlogAppContainer.style.display == 'none' && signInDiv.style.display == 'none' && signupDiv.style.display == 'block') {
+        ;
+        nextWhichThing[0].innerText = 'Sign up'
+        whichThing.innerText = 'Login'
+        signInDiv.style.display = 'block'
+        signupDiv.style.display = 'none'
+    } else {
+        whichThing.innerText = 'Sign up'
+        nextWhichThing[0].innerText = 'Login'
+        signInDiv.style.display = 'none'
+        signupDiv.style.display = 'block'
+    }
+    if (BlogAppContainer.style.display == 'block') {
+        whichThing.innerText = 'Dashboard'
+        nextWhichThing[0].innerText = 'Logout'
+        nextWhichThing[0].id = 'logoutBtn'
+        let logoutBtn = document.getElementById('logoutBtn')
+
+        logoutBtn?.addEventListener('click', logoutFunc)
+
+        function logoutFunc() {
+            signOut(auth).then(() => {
+                // Sign-out successful.
+
+                BlogAppContainer.style.display = 'none'
+                container[0].style.display = 'flex'
+                userName.innerText = null
+
+                checkPage()
+            }).catch((error) => {
+                // An error happened.
+                alert('Some error please try again')
+            });
+        }
+    }
+}
 
 signInPassword.addEventListener('focus', () => {
     signInPassword.style.borderColor = 'rgb(98, 94, 94)';
@@ -142,40 +189,43 @@ signInForm.addEventListener('submit', a => {
 }
 )
 
-function checkPage() {
-    if (BlogAppContainer.style.display == 'none' && signInDiv.style.display == 'none' && signupDiv.style.display == 'block') {
-        ;
-        nextWhichThing[0].innerText = 'Sign up'
-        whichThing.innerText = 'Login'
-        signInDiv.style.display = 'block'
-        signupDiv.style.display = 'none'
-    } else {
-        whichThing.innerText = 'Sign up'
-        nextWhichThing[0].innerText = 'Login'
-        signInDiv.style.display = 'none'
-        signupDiv.style.display = 'block'
-    }
-    if (BlogAppContainer.style.display == 'block') {
-        whichThing.innerText = 'Dashboard'
-        nextWhichThing[0].innerText = 'Logout'
-        nextWhichThing[0].id = 'logoutBtn'
-        let logoutBtn = document.getElementById('logoutBtn')
+// let now = new Date()
+// now.toLocaleDateString('en-us',{year:'numeric',month:'long',day:'numeric'})
 
-        logoutBtn?.addEventListener('click', logoutFunc)
 
-        function logoutFunc() {
-            signOut(auth).then(() => {
-                // Sign-out successful.
+blogForm.addEventListener('submit' , async (submitedForm) => {
 
-                BlogAppContainer.style.display = 'none'
-                container[0].style.display = 'flex'
-                userName.innerText = null
+submitedForm.preventDefault()
 
-                checkPage()
-            }).catch((error) => {
-                // An error happened.
-                alert('Some error please try again')
-            });
-        }
-    }
+let obj = {
+    placeholder : submitedForm.target[0].value,
+    userMind : submitedForm.target[1].value,
+    userName : userName,
+    userImg : userImg,
+
+}
+
+let collectionRef = collection(db,'userBlog')
+
+await addDoc(collectionRef,obj)
+
+getBlogs(collectionRef)
+
+submitedForm.target[0].value = '';
+submitedForm.target[1].value ='';
+})
+
+// getBlogs()
+async function getBlogs (collectionRef = collection(db,'userBlog')) {
+    let blogs = await getDocs(collectionRef)
+    divForBlogAdd.innerHTML = null;
+
+    blogs.forEach(element => {
+        let {placeholder,userName,userImg,userMind} = element.data()
+
+let div = `
+`
+
+    });
+
 }
