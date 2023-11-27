@@ -5,60 +5,59 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blogging-Website</title>
-    <link rel="shortcut icon" id="icon" href="output-onlinepngtools.png"
-        type="image/x-icon">
+    <link rel="shortcut icon" id="icon" href="output-onlinepngtools.png" type="image/x-icon">
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
     <header>
         <nav class="firstNav">
-            <h1 class="Personal-Blogging-App-txt">Personal Blogging App</h1><span class="nextWhichThing">a</span>
+            <h1 class="Personal-Blogging-App-txt">Personal Blogging App</h1><span class="nextWhichThing"></span>
         </nav>
         <nav class="secondNav">
-            <span id="whichThing">Signup</span>
+            <span id="whichThing"></span>
         </nav>
     </header>
     <div id="loader">
         <div class="loader"></div>
     </div>
-    <div class="container">
-        <div id="sign-up">
-            <form id="sign-up-form">
-                <br>
-                <br>
-                <br>
-                <input type="text" placeholder="First Name" required id="sign-up-user-first-name" />
-                <br>
-                <input type="text" placeholder="Last Name" required id="sign-up-user-last-name" />
-                <br>
-                <input type="email" placeholder="Email" required id="sign-up-user-email">
-                <br>
-                <input minlength="8" placeholder="Password" type="password" required id="sign-up-user-password">
-                <br>
-                <input minlength="8" placeholder="Repeat Password" type="password" required
-                    id="sign-up-user-repeat-password">
-                <br>
-                <button type="submit" id="sign-up-btn">Sign up</button>
-            </form>
+    <main>
+        <div class="container">
+            <div id="sign-up">
+                <form id="sign-up-form">
+                    <br>
+                    <br>
+                    <br>
+                    <input type="text" placeholder="First Name" required id="sign-up-user-first-name" />
+                    <br>
+                    <input type="text" placeholder="Last Name" required id="sign-up-user-last-name" />
+                    <br>
+                    <input type="email" placeholder="Email" required id="sign-up-user-email">
+                    <br>
+                    <input minlength="8" placeholder="Password" type="password" required id="sign-up-user-password">
+                    <br>
+                    <input minlength="8" placeholder="Repeat Password" type="password" required
+                        id="sign-up-user-repeat-password">
+                    <br>
+                    <button type="submit" id="sign-up-btn">Sign up</button>
+                </form>
+            </div>
+            <div id="sign-in">
+                <form id="sign-in-form">
+                    <br>
+                    <br>
+                    <br>
+                    <input type="email" placeholder="Email" required id="user-email">
+                    <br>
+                    <input minlength="8" placeholder="Password" type="password" required id="user-password">
+                    <br>
+                    <button type="submit" id="sign-in-btn">Login</button>
+                </form>
+            </div>
         </div>
-        <div id="sign-in">
-            <form id="sign-in-form">
-                <br>
-                <br>
-                <br>
-                <input type="email" placeholder="Email" required id="user-email">
-                <br>
-                <input minlength="8" placeholder="Password" type="password" required id="user-password">
-                <br>
-                <button type="submit" id="sign-in-btn">Login</button>
-            </form>
+        <div id="Blog-app-container">
         </div>
-    </div>
-    <div id="Blog-app-container">
-        <h1 class="welcome-txt">Welcome to Blog app</h1>
-        <button id="logoutBtn">log out</button>
-    </div>
+    </main>
     <script type="module" src="script.js"></script>
 </body>
 

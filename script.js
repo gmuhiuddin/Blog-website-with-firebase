@@ -16,10 +16,8 @@ let signInDiv = document.getElementById('sign-in');
 let signupDiv = document.getElementById('sign-up');
 let container = document.getElementsByClassName('container');
 let loader = document.getElementById('loader');
-let logoutBtn = document.getElementById('logoutBtn');
 let nextWhichThing = document.getElementsByClassName('nextWhichThing');
 let whichThing = document.getElementById('whichThing');
-
 
 const firebaseConfig = {
     apiKey: "AIzaSyDMeG-Yt8eUI3eoSEbLokIk9Fo_fCRTZ3k",
@@ -44,6 +42,7 @@ onAuthStateChanged(auth, async (user) => {
         container[0].style.display = 'none'
         loader.style.display = 'none';
         userId = user.uid;
+        checkPage()
 
         // ...
     } else {
@@ -52,6 +51,7 @@ onAuthStateChanged(auth, async (user) => {
         BlogAppContainer.style.display = 'none';
         container[0].style.display = 'flex';
         loader.style.display = 'none';
+        checkPage()
 
     }
 });
@@ -138,32 +138,40 @@ signInForm.addEventListener('submit', a => {
 }
 )
 
-logoutBtn.addEventListener('click', function () {
-    signOut(auth).then(() => {
-        // Sign-out successful.
+nextWhichThing[0].addEventListener('click', checkPage)
 
-        BlogAppContainer.style.display = 'none'
-        container[0].style.display = 'flex'
-    }).catch((error) => {
-        // An error happened.
-        alert('Some error please try again')
-    });
-})
-
-nextWhichThing[0].addEventListener('click' , checkPage)
-checkPage()
-
-function checkPage (){
-    if(BlogAppContainer.style.display == 'none' && signInDiv.style.display == 'none' && signupDiv.style.display == 'block'){;
+function checkPage() {
+    if (BlogAppContainer.style.display == 'none' && signInDiv.style.display == 'none' && signupDiv.style.display == 'block') {
+        ;
         nextWhichThing[0].innerText = 'Sign up'
         whichThing.innerText = 'Login'
         signInDiv.style.display = 'block'
         signupDiv.style.display = 'none'
-    }else{
+    } else {
         whichThing.innerText = 'Sign up'
-
         nextWhichThing[0].innerText = 'Login'
         signInDiv.style.display = 'none'
         signupDiv.style.display = 'block'
+    }
+    if (BlogAppContainer.style.display == 'block') {
+        whichThing.innerText = 'Dashboard'
+        nextWhichThing[0].innerText = 'Logout'
+        nextWhichThing[0].id = 'logoutBtn'
+        let logoutBtn = document.getElementById('logoutBtn')
+
+        logoutBtn?.addEventListener('click', logoutFunc)
+
+        function logoutFunc() {
+            signOut(auth).then(() => {
+                // Sign-out successful.
+
+                BlogAppContainer.style.display = 'none'
+                container[0].style.display = 'flex'
+                checkPage()
+            }).catch((error) => {
+                // An error happened.
+                alert('Some error please try again')
+            });
+        }
     }
 }

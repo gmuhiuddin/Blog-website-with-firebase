@@ -3,7 +3,7 @@ body {
     padding: 0px;
 }
 
-.firstNav{
+.firstNav {
     position: fixed;
     background-color: rgb(128, 25, 207);
     height: 55px;
@@ -14,28 +14,28 @@ body {
     align-items: center;
 }
 
-.secondNav{
+.secondNav {
     height: 79px;
     width: 100%;
     position: fixed;
     margin-top: 51px;
-    box-shadow:   0px 0.1px 3px gray;
+    box-shadow: 0px 0.1px 3px gray;
     display: flex;
     align-items: center;
 }
 
-.Personal-Blogging-App-txt{
+.Personal-Blogging-App-txt {
     margin-left: 99px;
     font-size: 29px;
 }
 
-#whichThing{
+#whichThing {
     font-size: 35px;
     font-weight: 600;
     margin-left: 99px;
 }
 
-.nextWhichThing{
+.nextWhichThing {
     font-size: 19px;
     margin-right: 99px;
     cursor: pointer;
@@ -141,4 +141,3 @@ input {
         transform: rotate(1turn)
     }
 }
-
