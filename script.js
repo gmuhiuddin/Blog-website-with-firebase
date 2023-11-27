@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-app.js";
 import { getAuth, signOut, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-auth.js";
-import { getFirestore, collection, addDoc, deleteDoc, doc, setDoc, getDoc, getDocs, updateDoc} from "https://www.gstatic.com/firebasejs/10.5.2/firebase-firestore.js";
+import { getFirestore, collection, addDoc, deleteDoc, doc, setDoc, getDoc, getDocs, updateDoc } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-firestore.js";
 
 let signUpUserName = document.getElementById('sign-up-user-first-name');
 let signUpUserLastName = document.getElementById('sign-up-user-last-name');
@@ -19,9 +19,10 @@ let loader = document.getElementById('loader');
 let nextWhichThing = document.getElementsByClassName('nextWhichThing');
 let whichThing = document.getElementById('whichThing');
 let userNameHtml = document.getElementById('userName');
-let blogForm = document.getElementById('blog-form'); 
-let divForBlogAdd = document.getElementById('divForBlogAdd'); 
-let myallBlogs = document.getElementById('myallBlogs'); 
+let blogForm = document.getElementById('blog-form');
+let divForBlogAdd = document.getElementById('divForBlogAdd');
+let myallBlogs = document.getElementById('myallBlogs');
+let inputs = document.getElementsByClassName('input');
 
 const firebaseConfig = {
     apiKey: "AIzaSyDMeG-Yt8eUI3eoSEbLokIk9Fo_fCRTZ3k",
@@ -38,7 +39,7 @@ const auth = getAuth(app);
 let db = getFirestore(app)
 let userId = '';
 let userName = '';
-let userImg = '';
+let userImgUrl = '';
 
 nextWhichThing[0].addEventListener('click', checkPage)
 
@@ -71,7 +72,6 @@ onAuthStateChanged(auth, async (user) => {
 
 function checkPage() {
     if (BlogAppContainer.style.display == 'none' && signInDiv.style.display == 'none' && signupDiv.style.display == 'block') {
-        ;
         nextWhichThing[0].innerText = 'Sign up'
         whichThing.innerText = 'Login'
         signInDiv.style.display = 'block'
@@ -89,16 +89,16 @@ function checkPage() {
         let logoutBtn = document.getElementById('logoutBtn')
 
         logoutBtn?.addEventListener('click', logoutFunc)
-
         function logoutFunc() {
+
             signOut(auth).then(() => {
                 // Sign-out successful.
 
                 BlogAppContainer.style.display = 'none'
                 container[0].style.display = 'flex'
-                userName.innerText = null
-
+                userNameHtml.innerText = '';
                 checkPage()
+
             }).catch((error) => {
                 // An error happened.
                 alert('Some error please try again')
@@ -130,9 +130,9 @@ signUpForm.addEventListener('submit', a => {
                 userId = userCredential.user.uid;
                 BlogAppContainer.style.display = 'block'
                 container[0].style.display = 'none'
-                signUpPassword.value = '';
-                signUpRepeatPassword.value = '';
-                signInPassword.value = '';
+                for (let i = 0; i < inputs.length; i++) {
+                    inputs[i].value = ''
+                }
                 await setDoc(doc(db, 'userName', userId), {
                     firstname: signUpUserName.value,
                     lastname: signUpUserLastName.value
@@ -147,10 +147,9 @@ signUpForm.addEventListener('submit', a => {
                 BlogAppContainer.style.display = 'none'
                 container[0].style.display = 'flex'
 
-                signInEmail.value = '';
-                signUpPassword.value = '';
-                signInPassword.value = '';
-                signUpRepeatPassword.value = '';
+                for (let i = 0; i < inputs.length; i++) {
+                    inputs[i].value = ''
+                }
                 // ..
             });
     } else {
@@ -170,9 +169,9 @@ signInForm.addEventListener('submit', a => {
             const user = userCredential.user;
             BlogAppContainer.style.display = 'block'
             container[0].style.display = 'none'
-            signUpPassword.value = '';
-            signUpRepeatPassword.value = '';
-            signInPassword.value = '';
+            for (let i = 0; i < inputs.length; i++) {
+                inputs[i].value = ''
+            }
 
             // ...
         })
@@ -189,43 +188,58 @@ signInForm.addEventListener('submit', a => {
 }
 )
 
-// let now = new Date()
-// now.toLocaleDateString('en-us',{year:'numeric',month:'long',day:'numeric'})
+blogForm.addEventListener('submit', async (submitedForm) => {
+    submitedForm.preventDefault()
 
+    let now = new Date()
+    let date = now.toLocaleDateString('en-us', { year: 'numeric', month: 'long', day: 'numeric' })
 
-blogForm.addEventListener('submit' , async (submitedForm) => {
+    let obj = {
+        placeholder: submitedForm.target[0].value,
+        userMind: submitedForm.target[1].value,
+        userName: userName,
+        userImg: userImgUrl,
+        engdate: date
+    }
 
-submitedForm.preventDefault()
+    let collectionRef = collection(db, 'userBlog')
 
-let obj = {
-    placeholder : submitedForm.target[0].value,
-    userMind : submitedForm.target[1].value,
-    userName : userName,
-    userImg : userImg,
+    await addDoc(collectionRef, obj)
 
-}
+    getBlogs()
 
-let collectionRef = collection(db,'userBlog')
-
-await addDoc(collectionRef,obj)
-
-getBlogs(collectionRef)
-
-submitedForm.target[0].value = '';
-submitedForm.target[1].value ='';
+    submitedForm.target[0].value = '';
+    submitedForm.target[1].value = '';
 })
 
-// getBlogs()
-async function getBlogs (collectionRef = collection(db,'userBlog')) {
-    let blogs = await getDocs(collectionRef)
+async function getBlogs() {
+    let collectionRef = collection(db, 'userBlog')
     divForBlogAdd.innerHTML = null;
 
+    let blogs = await getDocs(collectionRef)
+
     blogs.forEach(element => {
-        let {placeholder,userName,userImg,userMind} = element.data()
 
-let div = `
-`
+        let { placeholder, userName, userImg, userMind, engdate } = element.data()
 
+        let div = `
+        <div class="blogCart">
+        <div class="txtImgDiv">
+        <img class="cartImg" src="${userImg}" alt="user image">
+        <div>
+        <span class="placeholdertxt">${placeholder}</span>
+        <span class="txt"><span class="blogAdderName">${userName}</span> - <span class="blogAddedDate">${engdate}</span></span>
+        </div>
+        </div>
+        <br>
+        <span class="userMindTxt">${userMind}</span>
+        <br>
+        <span id="${element.id}" class="deleteTxt">Delete</span>
+        <span id="${element.id}" class="editTxt">Edit</span>
+        </div>`
+
+        divForBlogAdd.innerHTML += div;
     });
-
 }
+
+getBlogs()

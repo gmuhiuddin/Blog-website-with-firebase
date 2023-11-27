@@ -89,7 +89,7 @@ body {
 .input {
     display: block;
     margin: 0 auto;
-    width: 209px;
+    width: 219px;
     height: 29px;
     border-radius: 9px;
     padding: 1px 9px;
@@ -162,7 +162,7 @@ body {
 
 .blogInputContainer {
     margin-top: 181px;
-    box-shadow: 0px 0.1px 9apx gray;
+    box-shadow: 0px 0.1px 9px gray;
     border-radius: 5px;
     height: 349px;
     width: 799px;
@@ -206,16 +206,59 @@ body {
     cursor: pointer;
 }
 
-#myallBlogs{
+#myallBlogs {
     margin-left: 99px;
     font-size: 29px;
 }
 
-.blogCart{
+.blogCart {
     box-shadow: 0px 0.1px 3px gray;
     margin-left: 99px;
-    height: 349px;
+    padding: 12px;
     width: 799px;
     border-radius: 9px;
     margin-bottom: 29px;
+}
+
+.txtImgDiv{
+    display: flex;
+}
+
+.cartImg {
+    margin-top: 11px;
+    margin-left: 9px;
+    height: 79px;
+    width: 79px;
+    border-radius: 17px;
+}
+
+.placeholdertxt {
+    display: block;
+    width: 479px;
+    overflow-wrap: break-word;
+    font-size: 25px;
+    font-weight: 600;
+    margin-top: 12px;
+    margin-left: 19px;
+}
+
+.txt{
+    margin-left:19px ;
+}
+.userMindTxt{
+    display: block;
+    margin: 0 auto;
+    width: 759px;
+    overflow-wrap: break-word;
+}
+
+.deleteTxt{
+    margin-left: 19px;
+    color: rgb(128, 25, 207);
+    cursor: pointer;
+}
+.editTxt{
+    margin-left: 15px;
+    color: rgb(128, 25, 207);
+    cursor: pointer;
 }
