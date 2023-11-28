@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-app.js";
 import { getAuth, signOut, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-auth.js";
-import { getFirestore, collection, addDoc, deleteDoc, doc, setDoc, getDoc, getDocs, updateDoc } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-firestore.js";
+import { getFirestore, collection, addDoc, deleteDoc, doc, setDoc, getDoc, getDocs, updateDoc, query, where } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-firestore.js";
 
 let signUpUserName = document.getElementById('sign-up-user-first-name');
 let signUpUserLastName = document.getElementById('sign-up-user-last-name');
@@ -23,6 +23,14 @@ let blogForm = document.getElementById('blog-form');
 let divForBlogAdd = document.getElementById('divForBlogAdd');
 let myallBlogs = document.getElementById('myallBlogs');
 let inputs = document.getElementsByClassName('input');
+let PersonalBloggingAppTxt = document.getElementsByClassName('Personal-Blogging-App-txt');
+let userPlaceholder = document.getElementById('userPlaceholder');
+let userMindTxt = document.getElementById('userMindTxt');
+let submitBtn = document.getElementById('submitBtn');
+
+PersonalBloggingAppTxt[0].addEventListener('click', () => {
+    window.location.reload()
+})
 
 const firebaseConfig = {
     apiKey: "AIzaSyDMeG-Yt8eUI3eoSEbLokIk9Fo_fCRTZ3k",
@@ -40,6 +48,9 @@ let db = getFirestore(app)
 let userId = '';
 let userName = '';
 let userImgUrl = '';
+let blogId = '';
+var edit = false;
+var add = true;
 
 nextWhichThing[0].addEventListener('click', checkPage)
 
@@ -191,38 +202,66 @@ signInForm.addEventListener('submit', a => {
 blogForm.addEventListener('submit', async (submitedForm) => {
     submitedForm.preventDefault()
 
-    let now = new Date()
-    let date = now.toLocaleDateString('en-us', { year: 'numeric', month: 'long', day: 'numeric' })
+    if (edit == false && add == true) {
+        console.log('add')
 
-    let obj = {
-        placeholder: submitedForm.target[0].value,
-        userMind: submitedForm.target[1].value,
-        userName: userName,
-        userImg: userImgUrl,
-        engdate: date,
-        userId : userId
+        let now = new Date()
+        let date = now.toLocaleDateString('en-us', { year: 'numeric', month: 'long', day: 'numeric' })
+
+        let obj = {
+            placeholder: submitedForm.target[0].value,
+            userMind: submitedForm.target[1].value,
+            userName: userName,
+            userImg: userImgUrl,
+            engdate: date,
+            userId: userId
+        }
+
+        let collectionRef = collection(db, 'userBlog')
+
+        await addDoc(collectionRef, obj)
+
+        getBlogs()
+
+        submitedForm.target[0].value = '';
+        submitedForm.target[1].value = '';
+    } else {
+        console.log('edit')
+
+        let obj = {
+            placeholder: submitedForm.target[0].value,
+            userMind: submitedForm.target[1].value,
+        }
+
+        let docRef = doc(db, 'userBlog', blogId)
+
+        await updateDoc(docRef, obj)
+
+        getBlogs()
+
+        submitedForm.target[0].value = '';
+        submitedForm.target[1].value = '';
+        edit = false 
+         add = true
     }
 
-    let collectionRef = collection(db, 'userBlog')
-
-    await addDoc(collectionRef, obj)
-
-    getBlogs()
-
-    submitedForm.target[0].value = '';
-    submitedForm.target[1].value = '';
 })
 
+
 async function getBlogs() {
-    let collectionRef = collection(db, 'userBlog')
     divForBlogAdd.innerHTML = null;
+    let collectionRef = collection(db, 'userBlog')
 
     let blogs = await getDocs(collectionRef)
+
+    // let q = query(collection(db, 'userBlog'),where('userName',"==",userName))
+    // q.forEach((data) => {
+    //     console.log(data)
+    // })
 
     blogs.forEach(element => {
 
         let { placeholder, userName, userImg, userMind, engdate } = element.data()
-
         let div = `
         <div class="blogCart">
         <div class="txtImgDiv">
@@ -253,13 +292,10 @@ setInterval(() => {
     }
 }, 1000);
 
-
 async function deleteBlog() {
     await deleteDoc(doc(db, 'userBlog', this.id))
     getBlogs()
 }
-
-
 
 setInterval(() => {
     let editTxt = document.getElementsByClassName('editTxt');
@@ -269,36 +305,14 @@ setInterval(() => {
     }
 }, 1000);
 
-
-let userPlaceholder = document.getElementById('userPlaceholder');
-let userMindTxt = document.getElementById('userMindTxt');
-let submitBtn = document.getElementById('submitBtn');
-
 async function editBlog() {
-    submitBtn.type = 'button';
-    let id = this.id;
-    let now = new Date()
-    let date = now.toLocaleDateString('en-us', { year: 'numeric', month: 'long', day: 'numeric' })
+    edit = true;
+    add = false;
 
-    let userBlog = await getDoc(doc(db, 'userBlog', id))
+    blogId = this.id;
+
+    let userBlog = await getDoc(doc(db, 'userBlog', this.id))
+
     userPlaceholder.value = userBlog.data().placeholder
     userMindTxt.value = userBlog.data().userMind
-
-    submitBtn.addEventListener('click', async function () {
-
-        let obj = {
-            placeholder: userPlaceholder.value,
-            userMind: userMindTxt.value
-        }
-
-        await updateDoc(doc(db, 'userBlog', id), obj)
-
-        userPlaceholder.value ='';
-        userMindTxt.value='';
-        submitBtn.type = 'submit';
-
-        getBlogs()
-
-    })
-
 }
