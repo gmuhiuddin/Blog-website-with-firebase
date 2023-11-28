@@ -267,18 +267,15 @@ body {
 }
 
 #blogcontainer {
-    display: none;
-    /* display: block; */
+    display: block;
 }
 
-#profileContainer {
-    display: block;
-    /* display: none; */
+#profile-container {
+    display: none;
 }
 
 .profile {
     box-shadow: 0px 0.1px 2.5px gray;
-    height: 85vh;
     width: 59%;
     margin-top: 189px;
     margin-left: 99px;
@@ -287,7 +284,7 @@ body {
 }
 
 .img-container{
-    height: 419px;
+    height: 361px;
     width: 369px;
     margin-left: 49px;
 }
@@ -303,6 +300,18 @@ margin-left: 25px;
 #selectedImage{
     border-radius: 19px;
     margin: 0 auto;
-    width: 329px;
-    height: 289px;
+    width: auto;
+    height: auto;
+    max-height: 359px;
+    max-width: 367px;
+}
+
+.updateInput{
+    border-radius: 7px;
+    outline: none;
+    border: 2px solid gray;
+    height: 35px;
+    width: 299px;
+    margin-left: 79px;
+    font-size: 17px;
 }

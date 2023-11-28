@@ -1,4 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-app.js";
+import { getStorage, ref } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-storage.js";
 import { getAuth, signOut, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-auth.js";
 import { getFirestore, collection, addDoc, deleteDoc, doc, setDoc, getDoc, getDocs, updateDoc, query, where } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-firestore.js";
 
@@ -48,6 +49,8 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 let db = getFirestore(app)
+let storage = getStorage(app)
+const storageRef = ref(storage,'usersImages/img');
 let userId = '';
 let userName = "";
 let userImgUrl = '';
@@ -120,7 +123,7 @@ function checkPage() {
                 alert('Some error please try again')
             });
         }
-    }else if(profileContainer.style.display !== 'none'){
+    }else if(profileContainer.style.display == 'block'){
         whichThing.innerText = 'Profile'
         nextWhichThing[0].innerText = 'Logout'
         nextWhichThing[0].id = 'logoutBtn'
@@ -134,6 +137,7 @@ function checkPage() {
                 // Sign-out successful.
 
                 BlogAppContainer.style.display = 'none'
+                profileContainer.style.display = 'none'
                 container[0].style.display = 'flex'
                 userNameHtml.innerText = '';
                 checkPage()
@@ -351,10 +355,10 @@ function profilePage (){
     
 }
 
-let imageInput = document.getElementById('imageInput');
+// let imageInput = document.getElementById('imageInput');
 
-imageInput.addEventListener('change',profileEdit)
+// imageInput.addEventListener('change',profileEdit)
 
-function profileEdit () {
+// function profileEdit () {
     
-}
+// }
