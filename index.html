@@ -28,9 +28,9 @@
             <form id="sign-up-form">
                 <br>
                 <br>
-                <input class="input" type="text" placeholder="First Name" required id="sign-up-user-first-name" />
+                <input minlength="3" class="input" type="text" placeholder="First Name" required id="sign-up-user-first-name" />
                 <br>
-                <input class="input" type="text" placeholder="Last Name" required id="sign-up-user-last-name" />
+                <input minlength="3" class="input" type="text" placeholder="Last Name" required id="sign-up-user-last-name" />
                 <br>
                 <input class="input" type="email" placeholder="Email" required id="sign-up-user-email">
                 <br>
@@ -56,19 +56,24 @@
         </div>
     </div>
     <div id="Blog-app-container">
-        <div class="blogInputContainer">
-            <form id="blog-form">
-                <br>
-                <br>
-                <input required id="userPlaceholder" type="text" placeholder="Placeholder">
-                <br>
-                <textarea required id="userMindTxt" placeholder="What is in your mind" type="text"></textarea>
-                <br>
-                <button id="submitBtn" type="submit">Publish blog</button>
-            </form>
+        <div id="blogcontainer">
+            <div class="blogInputContainer">
+                <form id="blog-form">
+                    <br>
+                    <br>
+                    <input required id="userPlaceholder" type="text" placeholder="Placeholder">
+                    <br>
+                    <textarea required id="userMindTxt" placeholder="What is in your mind" type="text"></textarea>
+                    <br>
+                    <button id="submitBtn" type="submit">Publish blog</button>
+                </form>
+            </div>
+            <h1 id="myallBlogs"></h1>
+            <div id="divForBlogAdd">
+            </div>
         </div>
-        <h1 id="myallBlogs"></h1>
-        <div id="divForBlogAdd">
+        <div id="profile-container">
+            <div class="profile"></div>
         </div>
     </div>
     <script type="module" src="script.js"></script>

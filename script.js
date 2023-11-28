@@ -26,11 +26,14 @@ let inputs = document.getElementsByClassName('input');
 let PersonalBloggingAppTxt = document.getElementsByClassName('Personal-Blogging-App-txt');
 let userPlaceholder = document.getElementById('userPlaceholder');
 let userMindTxt = document.getElementById('userMindTxt');
-let submitBtn = document.getElementById('submitBtn');
+let blogcontainer = document.getElementById('blogcontainer');
+let profileContainer = document.getElementById('profile-container');
 
 PersonalBloggingAppTxt[0].addEventListener('click', () => {
     window.location.reload()
 })
+
+userNameHtml.addEventListener('click',profilePage)
 
 const firebaseConfig = {
     apiKey: "AIzaSyDMeG-Yt8eUI3eoSEbLokIk9Fo_fCRTZ3k",
@@ -46,7 +49,7 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 let db = getFirestore(app)
 let userId = '';
-let userName = '';
+let userName = "";
 let userImgUrl = '';
 let blogId = '';
 var edit = false;
@@ -63,6 +66,7 @@ onAuthStateChanged(auth, async (user) => {
         loader.style.display = 'none';
         userId = user.uid;
         checkPage()
+        getBlogs()
         let userNameObj = await getDoc(doc(db, 'userName', userId))
         let { firstname, lastname } = userNameObj.data()
         userName = `${firstname} ${lastname}`
@@ -93,13 +97,37 @@ function checkPage() {
         signInDiv.style.display = 'none'
         signupDiv.style.display = 'block'
     }
-    if (BlogAppContainer.style.display == 'block') {
+    if (BlogAppContainer.style.display == 'block' && !profileContainer.style.display) {
         whichThing.innerText = 'Dashboard'
         nextWhichThing[0].innerText = 'Logout'
         nextWhichThing[0].id = 'logoutBtn'
         let logoutBtn = document.getElementById('logoutBtn')
 
         logoutBtn?.addEventListener('click', logoutFunc)
+
+        function logoutFunc() {
+
+            signOut(auth).then(() => {
+                // Sign-out successful.
+
+                BlogAppContainer.style.display = 'none'
+                container[0].style.display = 'flex'
+                userNameHtml.innerText = '';
+                checkPage()
+
+            }).catch((error) => {
+                // An error happened.
+                alert('Some error please try again')
+            });
+        }
+    }else if(profileContainer.style.display !== 'none'){
+        whichThing.innerText = 'Profile'
+        nextWhichThing[0].innerText = 'Logout'
+        nextWhichThing[0].id = 'logoutBtn'
+        let logoutBtn = document.getElementById('logoutBtn')
+
+        logoutBtn?.addEventListener('click', logoutFunc)
+
         function logoutFunc() {
 
             signOut(auth).then(() => {
@@ -116,6 +144,7 @@ function checkPage() {
             });
         }
     }
+
 }
 
 signInPassword.addEventListener('focus', () => {
@@ -141,13 +170,13 @@ signUpForm.addEventListener('submit', a => {
                 userId = userCredential.user.uid;
                 BlogAppContainer.style.display = 'block'
                 container[0].style.display = 'none'
-                for (let i = 0; i < inputs.length; i++) {
-                    inputs[i].value = ''
-                }
                 await setDoc(doc(db, 'userName', userId), {
                     firstname: signUpUserName.value,
                     lastname: signUpUserLastName.value
                 })
+                for (let i = 0; i < inputs.length; i++) {
+                    inputs[i].value = ''
+                }
                 // ...
             })
             .catch((error) => {
@@ -203,7 +232,6 @@ blogForm.addEventListener('submit', async (submitedForm) => {
     submitedForm.preventDefault()
 
     if (edit == false && add == true) {
-        console.log('add')
 
         let now = new Date()
         let date = now.toLocaleDateString('en-us', { year: 'numeric', month: 'long', day: 'numeric' })
@@ -226,7 +254,6 @@ blogForm.addEventListener('submit', async (submitedForm) => {
         submitedForm.target[0].value = '';
         submitedForm.target[1].value = '';
     } else {
-        console.log('edit')
 
         let obj = {
             placeholder: submitedForm.target[0].value,
@@ -247,19 +274,18 @@ blogForm.addEventListener('submit', async (submitedForm) => {
 
 })
 
-
 async function getBlogs() {
     divForBlogAdd.innerHTML = null;
+
     let collectionRef = collection(db, 'userBlog')
 
     let blogs = await getDocs(collectionRef)
 
-    // let q = query(collection(db, 'userBlog'),where('userName',"==",userName))
-    // q.forEach((data) => {
-    //     console.log(data)
-    // })
-
-    blogs.forEach(element => {
+    let q =  query(collectionRef,where("userId","==",userId))
+    
+    const querySnapshot = await getDocs(q);
+    
+    querySnapshot.forEach(element => {
 
         let { placeholder, userName, userImg, userMind, engdate } = element.data()
         let div = `
@@ -274,15 +300,13 @@ async function getBlogs() {
         <br>
         <span class="userMindTxt">${userMind}</span>
         <br>
-        <span id="${element.id}" class="deleteTxt">Delete</span>
-        <span id="${element.id}" class="editTxt">Edit</span>
+        <span id="${element.id}" class="deleteTxt ${element.id}">Delete</span>
+        <span id="${element.id}" class="editTxt ${element.id}">Edit</span>
         </div>`
 
         divForBlogAdd.innerHTML += div;
     });
 }
-
-getBlogs()
 
 setInterval(() => {
     let deleteTxt = document.getElementsByClassName('deleteTxt');
@@ -293,6 +317,7 @@ setInterval(() => {
 }, 1000);
 
 async function deleteBlog() {
+    console.log(this.id)
     await deleteDoc(doc(db, 'userBlog', this.id))
     getBlogs()
 }
@@ -315,4 +340,13 @@ async function editBlog() {
 
     userPlaceholder.value = userBlog.data().placeholder
     userMindTxt.value = userBlog.data().userMind
+}
+
+function profilePage (){
+    if(!profileContainer.style.display){
+    blogcontainer.style.display = 'none'
+    profileContainer.style.display = 'block'
+    checkPage()
+    }else;
+    
 }
