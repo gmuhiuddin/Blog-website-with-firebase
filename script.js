@@ -350,3 +350,11 @@ function profilePage (){
     }else;
     
 }
+
+let imageInput = document.getElementById('imageInput');
+
+imageInput.addEventListener('change',profileEdit)
+
+function profileEdit () {
+    
+}

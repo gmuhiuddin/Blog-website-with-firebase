@@ -221,7 +221,7 @@ body {
     margin-bottom: 29px;
 }
 
-.txtImgDiv{
+.txtImgDiv {
     display: flex;
 }
 
@@ -243,43 +243,66 @@ body {
     margin-left: 19px;
 }
 
-.txt{
-    margin-left:19px ;
+.txt {
+    margin-left: 19px;
 }
-.userMindTxt{
+
+.userMindTxt {
     display: block;
     margin: 0 auto;
     width: 759px;
     overflow-wrap: break-word;
 }
 
-.deleteTxt{
+.deleteTxt {
     margin-left: 19px;
     color: rgb(128, 25, 207);
     cursor: pointer;
 }
-.editTxt{
+
+.editTxt {
     margin-left: 15px;
     color: rgb(128, 25, 207);
     cursor: pointer;
 }
 
-#blogcontainer{
+#blogcontainer {
     display: none;
     /* display: block; */
 }
 
-#profileContainer{
+#profileContainer {
     display: block;
     /* display: none; */
 }
 
-.profile{
+.profile {
     box-shadow: 0px 0.1px 2.5px gray;
     height: 85vh;
-width: 59%;
-margin-top: 189px;
+    width: 59%;
+    margin-top: 189px;
     margin-left: 99px;
     margin-bottom: 33px;
     border-radius: 12px;
+}
+
+.img-container{
+    height: 419px;
+    width: 369px;
+    margin-left: 49px;
+}
+
+#imageInput{
+font-size: 19px;
+width: 339px;
+display: block;
+margin: 0 auto;
+margin-left: 25px;
+}
+
+#selectedImage{
+    border-radius: 19px;
+    margin: 0 auto;
+    width: 329px;
+    height: 289px;
 }
