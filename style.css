@@ -150,7 +150,7 @@ body {
     background:
         radial-gradient(farthest-side, rgb(128, 25, 207) 94%, #0000) top/8px 8px no-repeat,
         conic-gradient(#0000 30%, rgb(128, 25, 207));
-    -webkit-mask: radial-gradient(farthest-side, #0000 calc(100% - 25px), #000 0);
+    -webkit-mask: radial-gradient(farthest-side, #0000 calc(100% - 23px), #000 0);
     animation: l13 1s infinite linear;
 }
 

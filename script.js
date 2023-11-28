@@ -199,7 +199,8 @@ blogForm.addEventListener('submit', async (submitedForm) => {
         userMind: submitedForm.target[1].value,
         userName: userName,
         userImg: userImgUrl,
-        engdate: date
+        engdate: date,
+        userId : userId
     }
 
     let collectionRef = collection(db, 'userBlog')
@@ -243,3 +244,61 @@ async function getBlogs() {
 }
 
 getBlogs()
+
+setInterval(() => {
+    let deleteTxt = document.getElementsByClassName('deleteTxt');
+
+    for (let i = 0; i < deleteTxt.length; i++) {
+        deleteTxt[i].addEventListener('click', deleteBlog)
+    }
+}, 1000);
+
+
+async function deleteBlog() {
+    await deleteDoc(doc(db, 'userBlog', this.id))
+    getBlogs()
+}
+
+
+
+setInterval(() => {
+    let editTxt = document.getElementsByClassName('editTxt');
+
+    for (let i = 0; i < editTxt.length; i++) {
+        editTxt[i].addEventListener('click', editBlog)
+    }
+}, 1000);
+
+
+let userPlaceholder = document.getElementById('userPlaceholder');
+let userMindTxt = document.getElementById('userMindTxt');
+let submitBtn = document.getElementById('submitBtn');
+
+async function editBlog() {
+    submitBtn.type = 'button';
+    let id = this.id;
+    let now = new Date()
+    let date = now.toLocaleDateString('en-us', { year: 'numeric', month: 'long', day: 'numeric' })
+
+    let userBlog = await getDoc(doc(db, 'userBlog', id))
+    userPlaceholder.value = userBlog.data().placeholder
+    userMindTxt.value = userBlog.data().userMind
+
+    submitBtn.addEventListener('click', async function () {
+
+        let obj = {
+            placeholder: userPlaceholder.value,
+            userMind: userMindTxt.value
+        }
+
+        await updateDoc(doc(db, 'userBlog', id), obj)
+
+        userPlaceholder.value ='';
+        userMindTxt.value='';
+        submitBtn.type = 'submit';
+
+        getBlogs()
+
+    })
+
+}
