@@ -29,12 +29,13 @@ let userPlaceholder = document.getElementById('userPlaceholder');
 let userMindTxt = document.getElementById('userMindTxt');
 let blogcontainer = document.getElementById('blogcontainer');
 let profileContainer = document.getElementById('profile-container');
+let blogInputContainer = document.getElementsByClassName('blogInputContainer');
 
 PersonalBloggingAppTxt[0].addEventListener('click', () => {
     window.location.reload()
 })
 
-userNameHtml.addEventListener('click',profilePage)
+userNameHtml.addEventListener('click', profilePage)
 
 const firebaseConfig = {
     apiKey: "AIzaSyDMeG-Yt8eUI3eoSEbLokIk9Fo_fCRTZ3k",
@@ -50,13 +51,12 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 let db = getFirestore(app)
 let storage = getStorage(app)
-const storageRef = ref(storage,'usersImages/img');
+let collectionRef = collection(db, 'userBlog')
 let userId = '';
 let userName = "";
-let userImgUrl = '';
 let blogId = '';
 var edit = false;
-var add = true;
+var add = true
 
 nextWhichThing[0].addEventListener('click', checkPage)
 
@@ -69,9 +69,10 @@ onAuthStateChanged(auth, async (user) => {
         loader.style.display = 'none';
         userId = user.uid;
         checkPage()
+        profileByDefault()
         getBlogs()
         let userNameObj = await getDoc(doc(db, 'userName', userId))
-        let { firstname, lastname } = userNameObj.data()
+        let { firstname, lastname} = userNameObj.data()
         userName = `${firstname} ${lastname}`
         userNameHtml.innerText = userName;
         myallBlogs.innerText = 'My Blogs';
@@ -84,7 +85,6 @@ onAuthStateChanged(auth, async (user) => {
         container[0].style.display = 'flex';
         loader.style.display = 'none';
         checkPage()
-
     }
 });
 
@@ -123,7 +123,7 @@ function checkPage() {
                 alert('Some error please try again')
             });
         }
-    }else if(profileContainer.style.display == 'block'){
+    } else if (profileContainer.style.display == 'block') {
         whichThing.innerText = 'Profile'
         nextWhichThing[0].innerText = 'Logout'
         nextWhichThing[0].id = 'logoutBtn'
@@ -176,7 +176,9 @@ signUpForm.addEventListener('submit', a => {
                 container[0].style.display = 'none'
                 await setDoc(doc(db, 'userName', userId), {
                     firstname: signUpUserName.value,
-                    lastname: signUpUserLastName.value
+                    lastname: signUpUserLastName.value,
+                    userImg: '',
+                    userEmail: userCredential.user
                 })
                 for (let i = 0; i < inputs.length; i++) {
                     inputs[i].value = ''
@@ -244,16 +246,16 @@ blogForm.addEventListener('submit', async (submitedForm) => {
             placeholder: submitedForm.target[0].value,
             userMind: submitedForm.target[1].value,
             userName: userName,
-            userImg: userImgUrl,
             engdate: date,
-            userId: userId
+            userId: userId,
+            userImage : ''
         }
 
         let collectionRef = collection(db, 'userBlog')
 
-        await addDoc(collectionRef, obj)
+        let id = await addDoc(collectionRef, obj)
 
-        getBlogs()
+        getBlogs(id)
 
         submitedForm.target[0].value = '';
         submitedForm.target[1].value = '';
@@ -266,36 +268,35 @@ blogForm.addEventListener('submit', async (submitedForm) => {
 
         let docRef = doc(db, 'userBlog', blogId)
 
-        await updateDoc(docRef, obj)
+        let id = await updateDoc(docRef, obj)
 
-        getBlogs()
+        getBlogs(id)
 
         submitedForm.target[0].value = '';
         submitedForm.target[1].value = '';
-        edit = false 
-         add = true
+        edit = false
+        add = true
     }
 
 })
 
-async function getBlogs() {
+async function getBlogs(id = blogId) {
     divForBlogAdd.innerHTML = null;
 
-    let collectionRef = collection(db, 'userBlog')
+        // let blogs = await getDocs(collectionRef)
 
-    let blogs = await getDocs(collectionRef)
+        let q = query(collectionRef, where("userId", "==", userId))
 
-    let q =  query(collectionRef,where("userId","==",userId))
-    
-    const querySnapshot = await getDocs(q);
-    
-    querySnapshot.forEach(element => {
+        let querySnapshot = await getDocs(q);    
+     
+        querySnapshot.forEach(async element => {
 
-        let { placeholder, userName, userImg, userMind, engdate } = element.data()
+        let { userName, placeholder, userMind, engdate ,userImage } = element.data()
+
         let div = `
         <div class="blogCart">
         <div class="txtImgDiv">
-        <img class="cartImg" src="${userImg}" alt="user image">
+        <img class="cartImg" src="${userImage}" alt="user image">
         <div>
         <span class="placeholdertxt">${placeholder}</span>
         <span class="txt"><span class="blogAdderName">${userName}</span> - <span class="blogAddedDate">${engdate}</span></span>
@@ -342,37 +343,65 @@ async function editBlog() {
     let userBlog = await getDoc(doc(db, 'userBlog', this.id))
 
     userPlaceholder.value = userBlog.data().placeholder
-    userMindTxt.value = userBlog.data().userMind
+    userMindTxt.value = userBlog.data().userMind;
+    document.documentElement.scrollTop = 0
 }
 
-function profilePage (){
-    if(!profileContainer.style.display){
-    blogcontainer.style.display = 'none'
-    profileContainer.style.display = 'block'
-    checkPage()
-    }else;
+function profilePage() {
+    if (!profileContainer.style.display) {
+        blogcontainer.style.display = 'none'
+        profileContainer.style.display = 'block'
+        checkPage()
+    } else;
 }
+
 
 let imageInput = document.getElementById('imageInput');
-let selectedImage= document.getElementById('selectedImage');
+let selectedImage = document.getElementById('selectedImage');
 let updateBtn = document.getElementById('updateBtn');
-let userNameForEdit = document.getElementById('userNameForEdit');
+let userFirtsNameForEdit = document.getElementById('userFirtsNameForEdit');
+let userLastNameForEdit = document.getElementById('userLastNameForEdit');
 let userEmailForEdit = document.getElementById('userEmailForEdit');
 
 updateBtn.addEventListener('click', profileEdit)
 
-async function profileEdit () {
-    await uploadBytes(storageRef,imageInput.value).then(() => {
+async function profileEdit() {
+
+    if(imageInput.files.length != 0){
+        let storageRef = ref(storage, `usersImages/${userId}`);
+
+    await uploadBytes(storageRef, imageInput.files[0]).then((snapshot) => {
         console.log('file is uploaded succesfully')
         getDownloadURL(storageRef).then(async (url) => {
-            // let obj = {
-            //     userImg : url 
-            // }
-            // await updateDoc(doc(db,'userBlog',blogId),obj)
-            selectedImage.src = url;
-            console.log(url)
+            let obj = {
+                userImg: url
+            }
+            await updateDoc(doc(db, 'userName', userId), obj)
+
         })
     })
+    }
+
+    let obj = {
+        firstname : userFirtsNameForEdit.value,
+        lastname : userLastNameForEdit.value,  
+    }
+
+    await updateDoc(doc(db, 'userName', userId), obj)
+
+    profileByDefault()
+    window.location.reload()
+
+}
+async function profileByDefault(){
     
+    let userObj = await getDoc(doc(db, 'userName', userId))
     
+ let { lastname, firstname, userEmail, userImg } = userObj.data()
+ 
+ selectedImage.src = userImg;
+ userFirtsNameForEdit.value = firstname;
+ userLastNameForEdit.value = lastname;
+ userEmailForEdit.value = userEmail;
+
 }
