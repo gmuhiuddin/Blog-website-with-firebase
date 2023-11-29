@@ -30,6 +30,12 @@ let userMindTxt = document.getElementById('userMindTxt');
 let blogcontainer = document.getElementById('blogcontainer');
 let profileContainer = document.getElementById('profile-container');
 let blogInputContainer = document.getElementsByClassName('blogInputContainer');
+let imageInput = document.getElementById('imageInput');
+let selectedImage = document.getElementById('selectedImage');
+let updateBtn = document.getElementById('updateBtn');
+let userFirtsNameForEdit = document.getElementById('userFirtsNameForEdit');
+let userLastNameForEdit = document.getElementById('userLastNameForEdit');
+let userEmailForEdit = document.getElementById('userEmailForEdit');
 
 PersonalBloggingAppTxt[0].addEventListener('click', () => {
     window.location.reload()
@@ -59,6 +65,10 @@ var edit = false;
 var add = true
 
 nextWhichThing[0].addEventListener('click', checkPage)
+
+updateBtn.addEventListener('click', profileEdit)
+
+imageInput.addEventListener('change', addImg)
 
 onAuthStateChanged(auth, async (user) => {
     if (user) {
@@ -246,13 +256,17 @@ blogForm.addEventListener('submit', async (submitedForm) => {
         let now = new Date()
         let date = now.toLocaleDateString('en-us', { year: 'numeric', month: 'long', day: 'numeric' })
 
+        let userObj = await getDoc(doc(db, 'userName', userId))
+
+        let { userImg } = userObj.data()
+
         let obj = {
             placeholder: submitedForm.target[0].value,
             userMind: submitedForm.target[1].value,
             userName: userName,
             engdate: date,
             userId: userId,
-            userImage: ''
+            userImage: userImg
         }
 
         let collectionRef = collection(db, 'userBlog')
@@ -281,8 +295,7 @@ blogForm.addEventListener('submit', async (submitedForm) => {
         edit = false
         add = true
     }
-
-})
+});
 
 async function getBlogs() {
     divForBlogAdd.innerHTML = null;
@@ -357,52 +370,41 @@ function profilePage() {
     } else;
 }
 
-
-let imageInput = document.getElementById('imageInput');
-let selectedImage = document.getElementById('selectedImage');
-let updateBtn = document.getElementById('updateBtn');
-let userFirtsNameForEdit = document.getElementById('userFirtsNameForEdit');
-let userLastNameForEdit = document.getElementById('userLastNameForEdit');
-let userEmailForEdit = document.getElementById('userEmailForEdit');
-
-updateBtn.addEventListener('click', profileEdit)
-imageInput.addEventListener('change',addImg)
-
-async function addImg (){
+async function addImg() {
     let storageRef = ref(storage, `usersImages/${userId}`);
 
-        await uploadBytes(storageRef, imageInput.files[0]).then((snapshot) => {
-            console.log('file is uploaded succesfully')
-            getDownloadURL(storageRef).then(async (url) => {
-                let obj = {
-                    userImg: url
+    await uploadBytes(storageRef, imageInput.files[0]).then((snapshot) => {
+        console.log('file is uploaded succesfully')
+        getDownloadURL(storageRef).then(async (url) => {
+            let obj = {
+                userImg: url
+            }
+            await updateDoc(doc(db, 'userName', userId), obj)
+            profileByDefault()
+
+            let ids = await getDocs(collectionRef)
+
+            ids.forEach(async (data) => {
+                let objj = {
+                    userImage: url
                 }
-                await updateDoc(doc(db, 'userName', userId), obj)
-                profileByDefault()
-
-                let ids = await getDocs(collectionRef)
-
-                ids.forEach(async (data) => {
-                 let objj = {
-                    userImage:url
-                 }
-                 await updateDoc(doc(db, 'userBlog', data.id), objj)
-                })
-
+                await updateDoc(doc(db, 'userBlog', data.id), objj)
             })
-            })
-    }
+
+        })
+    })
+}
 
 async function profileEdit() {
 
-       let ids = await getDocs(collectionRef)
+    let ids = await getDocs(collectionRef)
 
-       ids.forEach(async (data) => {
+    ids.forEach(async (data) => {
         let objj = {
-        userName:`${userFirtsNameForEdit.value} ${userLastNameForEdit.value}`
+            userName: `${userFirtsNameForEdit.value} ${userLastNameForEdit.value}`
         }
         await updateDoc(doc(db, 'userBlog', data.id), objj)
-       })
+    })
 
     if (imageInput.files.length != 0) {
         addImg()
