@@ -71,8 +71,10 @@ onAuthStateChanged(auth, async (user) => {
         checkPage()
         profileByDefault()
         getBlogs()
+
         let userNameObj = await getDoc(doc(db, 'userName', userId))
-        let { firstname, lastname} = userNameObj.data()
+
+        let { firstname, lastname } = userNameObj.data()
         userName = `${firstname} ${lastname}`
         userNameHtml.innerText = userName;
         myallBlogs.innerText = 'My Blogs';
@@ -174,12 +176,14 @@ signUpForm.addEventListener('submit', a => {
                 userId = userCredential.user.uid;
                 BlogAppContainer.style.display = 'block'
                 container[0].style.display = 'none'
+
                 await setDoc(doc(db, 'userName', userId), {
                     firstname: signUpUserName.value,
                     lastname: signUpUserLastName.value,
                     userImg: '',
-                    userEmail: userCredential.user
+                    userEmail: userCredential.user.email
                 })
+
                 for (let i = 0; i < inputs.length; i++) {
                     inputs[i].value = ''
                 }
@@ -188,7 +192,7 @@ signUpForm.addEventListener('submit', a => {
             .catch((error) => {
                 const errorCode = error.code;
                 const errorMessage = error.message;
-                alert('This email is already signed up')
+                console.log(errorMessage)
 
                 BlogAppContainer.style.display = 'none'
                 container[0].style.display = 'flex'
@@ -248,7 +252,7 @@ blogForm.addEventListener('submit', async (submitedForm) => {
             userName: userName,
             engdate: date,
             userId: userId,
-            userImage : ''
+            userImage: ''
         }
 
         let collectionRef = collection(db, 'userBlog')
@@ -280,18 +284,16 @@ blogForm.addEventListener('submit', async (submitedForm) => {
 
 })
 
-async function getBlogs(id = blogId) {
+async function getBlogs() {
     divForBlogAdd.innerHTML = null;
 
-        // let blogs = await getDocs(collectionRef)
+    let q = query(collectionRef, where("userId", "==", userId))
 
-        let q = query(collectionRef, where("userId", "==", userId))
+    let querySnapshot = await getDocs(q);
 
-        let querySnapshot = await getDocs(q);    
-     
-        querySnapshot.forEach(async element => {
+    querySnapshot.forEach(async element => {
 
-        let { userName, placeholder, userMind, engdate ,userImage } = element.data()
+        let { userName, placeholder, userMind, engdate, userImage } = element.data()
 
         let div = `
         <div class="blogCart">
@@ -364,27 +366,51 @@ let userLastNameForEdit = document.getElementById('userLastNameForEdit');
 let userEmailForEdit = document.getElementById('userEmailForEdit');
 
 updateBtn.addEventListener('click', profileEdit)
+imageInput.addEventListener('change',addImg)
+
+async function addImg (){
+    let storageRef = ref(storage, `usersImages/${userId}`);
+
+        await uploadBytes(storageRef, imageInput.files[0]).then((snapshot) => {
+            console.log('file is uploaded succesfully')
+            getDownloadURL(storageRef).then(async (url) => {
+                let obj = {
+                    userImg: url
+                }
+                await updateDoc(doc(db, 'userName', userId), obj)
+                profileByDefault()
+
+                let ids = await getDocs(collectionRef)
+
+                ids.forEach(async (data) => {
+                 let objj = {
+                    userImage:url
+                 }
+                 await updateDoc(doc(db, 'userBlog', data.id), objj)
+                })
+
+            })
+            })
+    }
 
 async function profileEdit() {
 
-    if(imageInput.files.length != 0){
-        let storageRef = ref(storage, `usersImages/${userId}`);
+       let ids = await getDocs(collectionRef)
 
-    await uploadBytes(storageRef, imageInput.files[0]).then((snapshot) => {
-        console.log('file is uploaded succesfully')
-        getDownloadURL(storageRef).then(async (url) => {
-            let obj = {
-                userImg: url
-            }
-            await updateDoc(doc(db, 'userName', userId), obj)
+       ids.forEach(async (data) => {
+        let objj = {
+        userName:`${userFirtsNameForEdit.value} ${userLastNameForEdit.value}`
+        }
+        await updateDoc(doc(db, 'userBlog', data.id), objj)
+       })
 
-        })
-    })
+    if (imageInput.files.length != 0) {
+        addImg()
     }
 
     let obj = {
-        firstname : userFirtsNameForEdit.value,
-        lastname : userLastNameForEdit.value,  
+        firstname: userFirtsNameForEdit.value,
+        lastname: userLastNameForEdit.value,
     }
 
     await updateDoc(doc(db, 'userName', userId), obj)
@@ -393,15 +419,14 @@ async function profileEdit() {
     window.location.reload()
 
 }
-async function profileByDefault(){
-    
-    let userObj = await getDoc(doc(db, 'userName', userId))
-    
- let { lastname, firstname, userEmail, userImg } = userObj.data()
- 
- selectedImage.src = userImg;
- userFirtsNameForEdit.value = firstname;
- userLastNameForEdit.value = lastname;
- userEmailForEdit.value = userEmail;
+async function profileByDefault() {
 
+    let userObj = await getDoc(doc(db, 'userName', userId))
+
+    let { lastname, firstname, userEmail, userImg } = userObj.data()
+
+    selectedImage.src = userImg;
+    userFirtsNameForEdit.value = firstname;
+    userLastNameForEdit.value = lastname;
+    userEmailForEdit.value = userEmail;
 }
