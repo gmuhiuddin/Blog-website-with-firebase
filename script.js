@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-app.js";
-import { getStorage, ref } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-storage.js";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-storage.js";
 import { getAuth, signOut, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-auth.js";
 import { getFirestore, collection, addDoc, deleteDoc, doc, setDoc, getDoc, getDocs, updateDoc, query, where } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-firestore.js";
 
@@ -337,7 +337,6 @@ setInterval(() => {
 async function editBlog() {
     edit = true;
     add = false;
-
     blogId = this.id;
 
     let userBlog = await getDoc(doc(db, 'userBlog', this.id))
@@ -352,13 +351,28 @@ function profilePage (){
     profileContainer.style.display = 'block'
     checkPage()
     }else;
-    
 }
 
-// let imageInput = document.getElementById('imageInput');
+let imageInput = document.getElementById('imageInput');
+let selectedImage= document.getElementById('selectedImage');
+let updateBtn = document.getElementById('updateBtn');
+let userNameForEdit = document.getElementById('userNameForEdit');
+let userEmailForEdit = document.getElementById('userEmailForEdit');
 
-// imageInput.addEventListener('change',profileEdit)
+updateBtn.addEventListener('click', profileEdit)
 
-// function profileEdit () {
+async function profileEdit () {
+    await uploadBytes(storageRef,imageInput.value).then(() => {
+        console.log('file is uploaded succesfully')
+        getDownloadURL(storageRef).then(async (url) => {
+            // let obj = {
+            //     userImg : url 
+            // }
+            // await updateDoc(doc(db,'userBlog',blogId),obj)
+            selectedImage.src = url;
+            console.log(url)
+        })
+    })
     
-// }
+    
+}

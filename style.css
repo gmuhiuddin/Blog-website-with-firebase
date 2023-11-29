@@ -310,8 +310,21 @@ margin-left: 25px;
     border-radius: 7px;
     outline: none;
     border: 2px solid gray;
-    height: 35px;
-    width: 299px;
+    height: 37px;
+    width: 329px;
     margin-left: 79px;
     font-size: 17px;
+}
+
+#updateBtn{
+    display: block;
+    margin-left: 121px;
+    height: 41px;
+    width: 219px;
+    background-color: rgb(91, 229, 91);
+    color: white;
+    border: none;
+    font-size: 21px;
+    border-radius: 12px;
+    cursor: pointer;
 }
