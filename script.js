@@ -64,9 +64,6 @@ let blogId = '';
 var edit = false;
 var add = true
 
-signInDiv.style.display == 'none'
-signupDiv.style.display == 'block'
-
 nextWhichThing[0].addEventListener('click', checkPage)
 
 updateBtn.addEventListener('click', profileEdit)
@@ -105,10 +102,10 @@ onAuthStateChanged(auth, async (user) => {
 
 function checkPage() {
     if (BlogAppContainer.style.display == 'none' && signInDiv.style.display == 'none' && signupDiv.style.display == 'block') {
-        nextWhichThing[0].innerText = 'Sign up'
-        whichThing.innerText = 'Login'
-        signInDiv.style.display = 'block'
-        signupDiv.style.display = 'none'
+        nextWhichThing[0].innerText = 'Sign up';
+        whichThing.innerText = 'Login';
+        signInDiv.style.display = 'block';
+        signupDiv.style.display = 'none';
     } else {
         whichThing.innerText = 'Sign up'
         nextWhichThing[0].innerText = 'Login'
