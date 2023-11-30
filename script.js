@@ -64,6 +64,9 @@ let blogId = '';
 var edit = false;
 var add = true
 
+signInDiv.style.display == 'none'
+signupDiv.style.display == 'block'
+
 nextWhichThing[0].addEventListener('click', checkPage)
 
 updateBtn.addEventListener('click', profileEdit)
@@ -266,7 +269,7 @@ blogForm.addEventListener('submit', async (submitedForm) => {
             userName: userName,
             engdate: date,
             userId: userId,
-            userImage: userImg
+            userImage: userImg ? userImg : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ69yukxQGBGUPT4o9Y7_v4nNsmgT5FuXbAQQ&usqp=CAU"
         }
 
         let collectionRef = collection(db, 'userBlog')
@@ -421,13 +424,14 @@ async function profileEdit() {
     window.location.reload()
 
 }
+
 async function profileByDefault() {
 
     let userObj = await getDoc(doc(db, 'userName', userId))
 
     let { lastname, firstname, userEmail, userImg } = userObj.data()
 
-    selectedImage.src = userImg;
+    selectedImage.src = userImg ? userImg : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ69yukxQGBGUPT4o9Y7_v4nNsmgT5FuXbAQQ&usqp=CAU";
     userFirtsNameForEdit.value = firstname;
     userLastNameForEdit.value = lastname;
     userEmailForEdit.value = userEmail;

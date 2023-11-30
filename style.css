@@ -283,30 +283,30 @@ body {
     border-radius: 12px;
 }
 
-.img-container{
+.img-container {
     height: 361px;
     width: 369px;
     margin-left: 49px;
 }
 
-#imageInput{
-font-size: 19px;
-width: 339px;
-display: block;
-margin: 0 auto;
-margin-left: 25px;
+#imageInput {
+    font-size: 19px;
+    width: 339px;
+    display: block;
+    margin: 0 auto;
+    margin-left: 25px;
 }
 
-#selectedImage{
+#selectedImage {
     border-radius: 19px;
     margin: 0 auto;
     width: auto;
     height: auto;
-    max-height: 309px;
+    max-height: 295px;
     max-width: 367px;
 }
 
-.updateInput{
+.updateInput {
     border-radius: 7px;
     outline: none;
     border: 2px solid gray;
@@ -314,10 +314,10 @@ margin-left: 25px;
     width: 329px;
     margin-left: 79px;
     font-size: 17px;
-    margin-top: 12px;
+    margin-top: 7px;
 }
 
-#updateBtn{
+#updateBtn {
     display: block;
     margin-left: 121px;
     height: 41px;
