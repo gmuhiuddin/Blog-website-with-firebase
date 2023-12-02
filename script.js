@@ -223,7 +223,7 @@ signUpForm.addEventListener('submit', a => {
 signInForm.addEventListener('submit', a => {
     a.preventDefault()
 
-    signInWithEmailAndPassword(auth, signInEmail.value, signInPassword.value, signUpUserName.value)
+    signInWithEmailAndPassword(auth, signInEmail.value, signInPassword.value)
         .then((userCredential) => {
             // Signed in
             const user = userCredential.user;
