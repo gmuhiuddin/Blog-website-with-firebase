@@ -29,7 +29,6 @@ let userPlaceholder = document.getElementById('userPlaceholder');
 let userMindTxt = document.getElementById('userMindTxt');
 let blogcontainer = document.getElementById('blogcontainer');
 let profileContainer = document.getElementById('profile-container');
-let blogInputContainer = document.getElementsByClassName('blogInputContainer');
 let imageInput = document.getElementById('imageInput');
 let selectedImage = document.getElementById('selectedImage');
 let updateBtn = document.getElementById('updateBtn');
@@ -128,6 +127,8 @@ function checkPage() {
                 BlogAppContainer.style.display = 'none'
                 container[0].style.display = 'flex'
                 userNameHtml.innerText = '';
+                userPlaceholder.value = '';
+                userMindTxt.value = '';
                 checkPage()
 
             }).catch((error) => {
@@ -152,6 +153,8 @@ function checkPage() {
                 profileContainer.style.display = 'none'
                 container[0].style.display = 'flex'
                 userNameHtml.innerText = '';
+                userPlaceholder.value = '';
+                userMindTxt.value = '';
                 checkPage()
 
             }).catch((error) => {
