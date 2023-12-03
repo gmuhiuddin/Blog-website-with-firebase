@@ -340,7 +340,6 @@ setInterval(() => {
 }, 1000);
 
 async function deleteBlog() {
-    console.log(this.id)
     await deleteDoc(doc(db, 'userBlog', this.id))
     getBlogs()
 }
@@ -351,6 +350,7 @@ setInterval(() => {
     for (let i = 0; i < editTxt.length; i++) {
         editTxt[i].addEventListener('click', editBlog)
     }
+    
 }, 1000);
 
 async function editBlog() {
