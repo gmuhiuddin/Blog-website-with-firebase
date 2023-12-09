@@ -350,7 +350,7 @@ setInterval(() => {
     for (let i = 0; i < editTxt.length; i++) {
         editTxt[i].addEventListener('click', editBlog)
     }
-    
+
 }, 1000);
 
 async function editBlog() {
@@ -385,12 +385,13 @@ async function addImg() {
             await updateDoc(doc(db, 'userName', userId), obj)
             profileByDefault()
 
-            let ids = await getDocs(collectionRef)
-
-            ids.forEach(async (data) => {
+            let ids = query(collectionRef, where("userId", "==", userId))
+            let a = await getDocs(ids)
+            a.forEach(async (data) => {
                 let objj = {
                     userImage: url
                 }
+
                 await updateDoc(doc(db, 'userBlog', data.id), objj)
             })
 
@@ -400,9 +401,10 @@ async function addImg() {
 
 async function profileEdit() {
 
-    let ids = await getDocs(collectionRef)
+    let ids = query(collectionRef, where("userId", "==", userId))
+    let a = await getDocs(ids)
 
-    ids.forEach(async (data) => {
+    a.forEach(async (data) => {
         let objj = {
             userName: `${userFirtsNameForEdit.value} ${userLastNameForEdit.value}`
         }
