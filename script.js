@@ -40,7 +40,7 @@ PersonalBloggingAppTxt[0].addEventListener('click', () => {
     window.location.reload()
 })
 
-userNameHtml.addEventListener('click', profilePage)
+userNameHtml.addEventListener('click', profilePage);
 
 const firebaseConfig = {
     apiKey: "AIzaSyDMeG-Yt8eUI3eoSEbLokIk9Fo_fCRTZ3k",
@@ -54,9 +54,9 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
-let db = getFirestore(app)
-let storage = getStorage(app)
-let collectionRef = collection(db, 'userBlog')
+let db = getFirestore(app);
+let storage = getStorage(app);
+let collectionRef = collection(db, 'userBlog');
 let userId = '';
 let userName = "";
 let blogId = '';
