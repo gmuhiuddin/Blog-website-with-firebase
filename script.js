@@ -2,7 +2,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.2/firebas
 import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-storage.js";
 import { getAuth, signOut, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-auth.js";
 import { getFirestore, collection, addDoc, deleteDoc, doc, setDoc, getDoc, getDocs, updateDoc, query, where } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-firestore.js";
-
+as,.dnaksdnaksjdnlkajsd
 let signUpUserName = document.getElementById('sign-up-user-first-name');
 let signUpUserLastName = document.getElementById('sign-up-user-last-name');
 let signUpEmail = document.getElementById('sign-up-user-email');
