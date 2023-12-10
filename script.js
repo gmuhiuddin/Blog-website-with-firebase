@@ -2,7 +2,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.5.2/firebas
 import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-storage.js";
 import { getAuth, signOut, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-auth.js";
 import { getFirestore, collection, addDoc, deleteDoc, doc, setDoc, getDoc, getDocs, updateDoc, query, where } from "https://www.gstatic.com/firebasejs/10.5.2/firebase-firestore.js";
-as,.dnaksdnaksjdnlkajsd
+
 let signUpUserName = document.getElementById('sign-up-user-first-name');
 let signUpUserLastName = document.getElementById('sign-up-user-last-name');
 let signUpEmail = document.getElementById('sign-up-user-email');
@@ -374,19 +374,24 @@ function profilePage() {
 }
 
 async function addImg() {
+
     let storageRef = ref(storage, `usersImages/${userId}`);
 
     await uploadBytes(storageRef, imageInput.files[0]).then((snapshot) => {
-        console.log('file is uploaded succesfully')
+
         getDownloadURL(storageRef).then(async (url) => {
+
             let obj = {
                 userImg: url
             }
+
             await updateDoc(doc(db, 'userName', userId), obj)
             profileByDefault()
 
-            let ids = query(collectionRef, where("userId", "==", userId))
-            let a = await getDocs(ids)
+            let ids = query(collectionRef, where("userId", "==", userId));
+            
+            let a = await getDocs(ids);
+
             a.forEach(async (data) => {
                 let objj = {
                     userImage: url
