@@ -323,42 +323,25 @@ async function getBlogs() {
         <br>
         <span class="userMindTxt">${userMind}</span>
         <br>
-        <span id="${element.id}" class="deleteTxt ${element.id}">Delete</span>
-        <span id="${element.id}" class="editTxt ${element.id}">Edit</span>
+        <span id="${element.id}" onClick='deleteBlog(this)' class="deleteTxt">Delete</span>
+        <span id="${element.id}" onClick='editBlog(this)' class="editTxt">Edit</span>
         </div>`
 
         divForBlogAdd.innerHTML += div;
     });
 }
 
-setInterval(() => {
-    let deleteTxt = document.getElementsByClassName('deleteTxt');
-
-    for (let i = 0; i < deleteTxt.length; i++) {
-        deleteTxt[i].addEventListener('click', deleteBlog)
-    }
-}, 1000);
-
-async function deleteBlog() {
-    await deleteDoc(doc(db, 'userBlog', this.id))
+window.deleteBlog = async function (delBtnThis) {
+    await deleteDoc(doc(db, 'userBlog', delBtnThis.id))
     getBlogs()
 }
 
-setInterval(() => {
-    let editTxt = document.getElementsByClassName('editTxt');
-
-    for (let i = 0; i < editTxt.length; i++) {
-        editTxt[i].addEventListener('click', editBlog)
-    }
-
-}, 1000);
-
-async function editBlog() {
+window.editBlog = async function (editBtnThis) {
     edit = true;
     add = false;
-    blogId = this.id;
+    blogId = editBtnThis.id;
 
-    let userBlog = await getDoc(doc(db, 'userBlog', this.id))
+    let userBlog = await getDoc(doc(db, 'userBlog', editBtnThis.id))
 
     userPlaceholder.value = userBlog.data().placeholder
     userMindTxt.value = userBlog.data().userMind;
