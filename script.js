@@ -38,7 +38,7 @@ let userEmailForEdit = document.getElementById('userEmailForEdit');
 
 PersonalBloggingAppTxt[0].addEventListener('click', () => {
     window.location.reload()
-})
+});
 
 userNameHtml.addEventListener('click', profilePage);
 
@@ -63,11 +63,9 @@ let blogId = '';
 var edit = false;
 var add = true
 
-nextWhichThing[0].addEventListener('click', checkPage)
-
-updateBtn.addEventListener('click', profileEdit)
-
-imageInput.addEventListener('change', addImg)
+nextWhichThing[0].addEventListener('click', checkPage);
+updateBtn.addEventListener('click', profileEdit);
+imageInput.addEventListener('change', addImg);
 
 onAuthStateChanged(auth, async (user) => {
     if (user) {
@@ -178,7 +176,6 @@ signUpRepeatPassword.addEventListener('focus', () => {
 })
 
 signUpForm.addEventListener('submit', a => {
-
     a.preventDefault()
 
     if (signUpPassword.value == signUpRepeatPassword.value) {
@@ -246,7 +243,6 @@ signInForm.addEventListener('submit', a => {
             signInPassword.style.borderColor = 'red';
             signInPassword.style.boxShadow = '0px 0px 5px red';
         });
-
 
 }
 )
@@ -369,10 +365,11 @@ async function addImg() {
             }
 
             await updateDoc(doc(db, 'userName', userId), obj)
+
             profileByDefault()
 
             let ids = query(collectionRef, where("userId", "==", userId));
-            
+
             let a = await getDocs(ids);
 
             a.forEach(async (data) => {
