@@ -362,11 +362,11 @@ async function addImg() {
 
             let obj = {
                 userImg: url
-            }
+            };
 
-            await updateDoc(doc(db, 'userName', userId), obj)
+            await updateDoc(doc(db, 'userName', userId), obj);
 
-            profileByDefault()
+            profileByDefault();
 
             let ids = query(collectionRef, where("userId", "==", userId));
 
@@ -386,8 +386,8 @@ async function addImg() {
 
 async function profileEdit() {
 
-    let ids = query(collectionRef, where("userId", "==", userId))
-    let a = await getDocs(ids)
+    let ids = query(collectionRef, where("userId", "==", userId));
+    let a = await getDocs(ids);
 
     a.forEach(async (data) => {
         let objj = {
