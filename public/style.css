@@ -1,0 +1,340 @@
+@font-face {
+    font-family: poppins;
+    src: url(Poppins-Medium.ttf);
+}
+
+* {
+    font-family: poppins;
+}
+
+body {
+    margin: 0px;
+    padding: 0px;
+}
+
+.navbar {
+    top: 0%;
+    position: fixed;
+    width: 100%;
+}
+
+.firstNav {
+    background-color: rgb(128, 25, 207);
+    height: 55px;
+    width: 100%;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.secondNav {
+    height: 79px;
+    width: 100%;
+    box-shadow: 0px 0.1px 3px gray;
+    display: flex;
+    align-items: center;
+    background-color: white;
+}
+
+.Personal-Blogging-App-txt {
+    margin-left: 99px;
+    font-size: 25px;
+    cursor: pointer;
+}
+
+.navbarSecondTxt {
+    margin-right: 100px;
+    display: flex;
+    align-items: center;
+}
+
+#whichThing {
+    font-size: 31px;
+    font-weight: 600;
+    margin-left: 99px;
+}
+
+#userName {
+    margin-right: 41px;
+    font-size: 21px;
+    cursor: pointer;
+}
+
+.nextWhichThing {
+    font-size: 19px;
+    cursor: pointer;
+}
+
+.container {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+}
+
+#sign-up {
+    margin-top: 99px;
+    box-shadow: 1px 1px 7px black;
+    height: 399px;
+    width: 389px;
+    display: block;
+}
+
+#sign-in {
+    margin-top: 99px;
+    box-shadow: 1px 1px 7px black;
+    height: 229px;
+    width: 389px;
+    display: none;
+}
+
+.input {
+    display: block;
+    margin: 0 auto;
+    width: 219px;
+    height: 29px;
+    border-radius: 9px;
+    padding: 1px 9px;
+    box-shadow: none;
+    border: 1px solid rgb(98, 94, 94);
+    outline: none;
+}
+
+#sign-up-btn {
+    display: block;
+    margin: 0 auto;
+    width: 79px;
+    height: 35px;
+    border-radius: 5px;
+    color: white;
+    background-color: rgb(128, 25, 207);
+    outline: none;
+    border: none;
+    cursor: pointer;
+}
+
+.txt {
+    text-align: center;
+    font-size: 18px;
+}
+
+
+#sign-in-btn {
+    display: block;
+    margin: 0 auto;
+    width: 79px;
+    height: 35px;
+    border-radius: 5px;
+    color: white;
+    background-color: rgb(128, 25, 207);
+    outline: none;
+    border: none;
+    cursor: pointer;
+}
+
+#Blog-app-container {
+    display: none;
+}
+
+#loader {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.loader {
+    width: 191px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background:
+        radial-gradient(farthest-side, rgb(128, 25, 207) 94%, #0000) top/8px 8px no-repeat,
+        conic-gradient(#0000 30%, rgb(128, 25, 207));
+    -webkit-mask: radial-gradient(farthest-side, #0000 calc(100% - 23px), #000 0);
+    animation: l13 1s infinite linear;
+}
+
+@keyframes l13 {
+    100% {
+        transform: rotate(1turn)
+    }
+}
+
+.blogInputContainer {
+    margin-top: 181px;
+    box-shadow: 0px 0.1px 9px gray;
+    border-radius: 5px;
+    height: 349px;
+    width: 799px;
+    margin-left: 99px;
+}
+
+#userPlaceholder {
+    display: block;
+    margin: 0 auto;
+    width: 601px;
+    height: 31px;
+    border-radius: 9px;
+    padding: 1px 9px;
+    border: 1px solid rgb(98, 94, 94);
+    outline: none;
+    font-size: 15px;
+}
+
+#userMindTxt {
+    display: block;
+    margin: 0 auto;
+    max-width: 601px;
+    max-height: 145px;
+    min-width: 601px;
+    min-height: 145px;
+    border-radius: 9px;
+    padding: 1px 9px;
+    border: 1px solid rgb(98, 94, 94);
+    outline: none;
+    font-size: 15px;
+}
+
+#submitBtn {
+    margin-left: 89px;
+    border-radius: 9px;
+    border: none;
+    height: 35px;
+    width: 129px;
+    background-color: rgb(128, 25, 207);
+    color: white;
+    cursor: pointer;
+}
+
+#myallBlogs {
+    margin-left: 99px;
+    font-size: 29px;
+}
+
+.blogCart {
+    box-shadow: 0px 0.1px 3px gray;
+    margin-left: 99px;
+    padding: 12px;
+    width: 799px;
+    border-radius: 9px;
+    margin-bottom: 29px;
+}
+
+.txtImgDiv {
+    display: flex;
+}
+
+.cartImg {
+    margin-top: 11px;
+    margin-left: 9px;
+    height: 79px;
+    width: 79px;
+    border-radius: 17px;
+}
+
+.placeholdertxt {
+    display: block;
+    width: 479px;
+    overflow-wrap: break-word;
+    font-size: 25px;
+    font-weight: 600;
+    margin-top: 12px;
+    margin-left: 19px;
+}
+
+.txt {
+    margin-left: 19px;
+}
+
+.userMindTxt {
+    display: block;
+    margin: 0 auto;
+    width: 759px;
+    overflow-wrap: break-word;
+}
+
+.deleteTxt {
+    margin-left: 19px;
+    color: rgb(128, 25, 207);
+    cursor: pointer;
+}
+
+.editTxt {
+    margin-left: 15px;
+    color: rgb(128, 25, 207);
+    cursor: pointer;
+}
+
+#blogcontainer {
+    display: block;
+}
+
+#profile-container {
+    display: none;
+}
+
+.profile {
+    box-shadow: 0px 0.1px 2.5px gray;
+    width: 59%;
+    margin-top: 189px;
+    margin-left: 99px;
+    margin-bottom: 33px;
+    border-radius: 12px;
+}
+
+.img-container {
+    height: 361px;
+    width: 369px;
+    margin-left: 49px;
+}
+
+#imageInput {
+    font-size: 19px;
+    width: 339px;
+    display: block;
+    margin: 0 auto;
+    margin-left: 25px;
+}
+
+#selectedImage {
+    border-radius: 19px;
+    margin: 0 auto;
+    width: auto;
+    height: auto;
+    max-height: 295px;
+    max-width: 367px;
+}
+
+.updateInput {
+    border-radius: 7px;
+    outline: none;
+    border: 2px solid gray;
+    height: 37px;
+    width: 329px;
+    margin-left: 79px;
+    font-size: 17px;
+    margin-top: 7px;
+}
+
+#updateBtn {
+    display: block;
+    margin-left: 121px;
+    height: 41px;
+    width: 219px;
+    background-color: rgb(91, 229, 91);
+    color: white;
+    border: none;
+    font-size: 21px;
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+#user_image{
+    display: none;
+    width: 47px;
+    height: 45px;
+    border-radius: 50%;
+    margin-right: 7px;
+}
