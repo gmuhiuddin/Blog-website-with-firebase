@@ -45,6 +45,8 @@ body {
 
 .navbarSecondTxt {
     margin-right: 100px;
+    display: flex;
+    align-items: center;
 }
 
 #whichThing {
@@ -327,4 +329,12 @@ body {
     font-size: 21px;
     border-radius: 12px;
     cursor: pointer;
+}
+
+#user_image{
+    display: none;
+    width: 47px;
+    height: 45px;
+    border-radius: 50%;
+    margin-right: 7px;
 }
