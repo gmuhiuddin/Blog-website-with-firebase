@@ -273,28 +273,26 @@ body {
 
 #profile-container {
     display: none;
+    justify-content: center;
 }
 
 .profile {
     box-shadow: 0px 0.1px 2.5px gray;
-    width: 59%;
     margin-top: 189px;
-    margin-left: 99px;
     margin-bottom: 33px;
     border-radius: 12px;
+    width: 469px;
 }
 
 .img-container {
     height: 361px;
     width: 369px;
-    margin-left: 49px;
+    margin: 0 49px;
 }
 
 #imageInput {
     font-size: 19px;
     width: 339px;
-    display: block;
-    margin: 0 auto;
     margin-left: 25px;
 }
 
@@ -313,14 +311,13 @@ body {
     border: 2px solid gray;
     height: 37px;
     width: 329px;
-    margin-left: 79px;
+    margin: 1px 79px;
     font-size: 17px;
-    margin-top: 7px;
 }
 
 #updateBtn {
     display: block;
-    margin-left: 121px;
+    margin: 0 auto;
     height: 41px;
     width: 219px;
     background-color: rgb(91, 229, 91);

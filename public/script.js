@@ -169,7 +169,7 @@ function checkPage() {
           alert("Some error please try again");
         });
     }
-  } else if (profileContainer.style.display == "block") {
+  } else if (profileContainer.style.display == "flex") {
     whichThing.innerText = "Profile";
     nextWhichThing[0].innerText = "Logout";
     nextWhichThing[0].id = "logoutBtn";
@@ -384,7 +384,7 @@ window.editBlog = async function (editBtnThis) {
 function profilePage() {
   if (!profileContainer.style.display) {
     blogcontainer.style.display = "none";
-    profileContainer.style.display = "block";
+    profileContainer.style.display = "flex";
     checkPage();
   } else;
 };
