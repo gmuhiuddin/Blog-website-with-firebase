@@ -30,9 +30,7 @@ let signUpUserName = document.getElementById("sign-up-user-first-name");
 let signUpUserLastName = document.getElementById("sign-up-user-last-name");
 let signUpEmail = document.getElementById("sign-up-user-email");
 let signUpPassword = document.getElementById("sign-up-user-password");
-let signUpRepeatPassword = document.getElementById(
-  "sign-up-user-repeat-password"
-);
+let signUpRepeatPassword = document.getElementById("sign-up-user-repeat-password");
 let signInEmail = document.getElementById("user-email");
 let signInPassword = document.getElementById("user-password");
 let signUpForm = document.getElementById("sign-up-form");
@@ -49,9 +47,7 @@ let blogForm = document.getElementById("blog-form");
 let divForBlogAdd = document.getElementById("divForBlogAdd");
 let myallBlogs = document.getElementById("myallBlogs");
 let inputs = document.getElementsByClassName("input");
-let PersonalBloggingAppTxt = document.getElementsByClassName(
-  "Personal-Blogging-App-txt"
-);
+let PersonalBloggingAppTxt = document.getElementsByClassName("Personal-Blogging-App-txt");
 let userPlaceholder = document.getElementById("userPlaceholder");
 let userMindTxt = document.getElementById("userMindTxt");
 let blogcontainer = document.getElementById("blogcontainer");
@@ -200,7 +196,7 @@ function checkPage() {
         });
     }
   }
-}
+};
 
 signInPassword.addEventListener("focus", () => {
   signInPassword.style.borderColor = "rgb(98, 94, 94)";
@@ -366,7 +362,7 @@ async function getBlogs() {
 
     divForBlogAdd.innerHTML += div;
   });
-}
+};
 
 window.deleteBlog = async function (delBtnThis) {
   await deleteDoc(doc(db, "userBlog", delBtnThis.id));
@@ -391,7 +387,7 @@ function profilePage() {
     profileContainer.style.display = "block";
     checkPage();
   } else;
-}
+};
 
 async function addImg() {
   let storageRef = ref(storage, `usersImages/${userId}`);
@@ -419,7 +415,7 @@ async function addImg() {
       });
     });
   });
-}
+};
 
 async function profileEdit() {
   let ids = query(collectionRef, where("userId", "==", userId));
@@ -445,7 +441,7 @@ async function profileEdit() {
 
   profileByDefault();
   window.location.reload();
-}
+};
 
 async function profileByDefault() {
   let userObj = await getDoc(doc(db, "userName", userId));
@@ -458,4 +454,4 @@ async function profileByDefault() {
   userFirtsNameForEdit.value = firstname;
   userLastNameForEdit.value = lastname;
   userEmailForEdit.value = userEmail;
-}
+};
