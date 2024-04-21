@@ -59,6 +59,7 @@ let userFirtsNameForEdit = document.getElementById("userFirtsNameForEdit");
 let userLastNameForEdit = document.getElementById("userLastNameForEdit");
 let userEmailForEdit = document.getElementById("userEmailForEdit");
 let user_image = document.getElementById("user_image");
+let submitBtn = document.getElementById('submitBtn');
 
 PersonalBloggingAppTxt[0].addEventListener("click", () => {
   window.location.reload();
@@ -331,6 +332,7 @@ blogForm.addEventListener("submit", async (submitedForm) => {
     submitedForm.target[1].value = "";
     edit = false;
     add = true;
+  submitBtn.innerText = 'Publish Blog';
   }
 });
 
@@ -380,6 +382,7 @@ window.editBlog = async function (editBtnThis) {
   userPlaceholder.value = userBlog.data().placeholder;
   userMindTxt.value = userBlog.data().userMind;
   document.documentElement.scrollTop = 0;
+  submitBtn.innerText = 'Edit Blog';
 };
 
 function profilePage() {
