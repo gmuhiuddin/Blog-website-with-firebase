@@ -281,19 +281,27 @@ body {
     margin-top: 189px;
     margin-bottom: 33px;
     border-radius: 12px;
-    width: 469px;
 }
 
 .img-container {
-    height: 361px;
     width: 369px;
-    margin: 0 49px;
+    margin: auto;
 }
 
 #imageInput {
-    font-size: 19px;
-    width: 339px;
-    margin-left: 25px;
+    display: none;
+}
+
+.image-input-label{
+    padding: 11px 0px;
+    color: #000;
+    width: 199px;
+    background-color: yellow;
+    border-radius: 11px;
+    display: block;
+    margin: auto;
+    cursor: pointer;
+    text-align: center;
 }
 
 #selectedImage {
@@ -320,7 +328,7 @@ body {
     margin: 0 auto;
     height: 41px;
     width: 219px;
-    background-color: rgb(91, 229, 91);
+    background-color: rgb(52, 212, 52);
     color: white;
     border: none;
     font-size: 21px;
@@ -330,8 +338,8 @@ body {
 
 #user_image{
     display: none;
-    width: 47px;
-    height: 45px;
+    width: 49px;
+    height: 47px;
     border-radius: 50%;
     margin-right: 7px;
 }

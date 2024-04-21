@@ -86,6 +86,7 @@ let userName = "";
 let blogId = "";
 var edit = false;
 var add = true;
+let anotherUserImage = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ69yukxQGBGUPT4o9Y7_v4nNsmgT5FuXbAQQ&usqp=CAU";
 
 nextWhichThing[0].addEventListener("click", checkPage);
 updateBtn.addEventListener("click", profileEdit);
@@ -109,7 +110,7 @@ onAuthStateChanged(auth, async (user) => {
     userName = `${firstname} ${lastname}`;
     userNameHtml.innerText = userName;
     user_image.style.display = "block";
-    user_image.src = userImg;
+    user_image.src = userImg ? userImg : anotherUserImage;
     myallBlogs.innerText = "My Blogs";
     // ...
   } else {
@@ -450,7 +451,7 @@ async function profileByDefault() {
 
   selectedImage.src = userImg
     ? userImg
-    : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ69yukxQGBGUPT4o9Y7_v4nNsmgT5FuXbAQQ&usqp=CAU";
+    : anotherUserImage;
   userFirtsNameForEdit.value = firstname;
   userLastNameForEdit.value = lastname;
   userEmailForEdit.value = userEmail;
